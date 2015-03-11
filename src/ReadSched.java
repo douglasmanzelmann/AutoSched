@@ -2,8 +2,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+//import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,13 +40,13 @@ public class ReadSched {
         List<Listing> listings = new ArrayList<Listing>();
 
 
-
         for (WebElement row : tableAgendaRows) {
             List<WebElement> columns = row.findElements(By.tagName("td"));
             Iterator<WebElement> column = columns.iterator();
             Listing temp = new Listing();
 
-            temp.setDate(column.next().getText().replace("\n", " ").trim());
+            //temp.setDate(column.next().getText().replace("\n", " ").trim());
+            temp.setDate(column.next().getAttribute("title"));
             temp.setStringTime(column.next().getText().trim());
             temp.setRoom(column.next().getText().replace("\n", " ").trim());
             temp.setActivity(column.next().getText().replace("\n", " ").trim());
