@@ -1,7 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.ArrayList;
@@ -45,12 +44,21 @@ public class ReadSched {
             Iterator<WebElement> column = columns.iterator();
             Listing temp = new Listing();
 
-            //temp.setDate(column.next().getText().replace("\n", " ").trim());
-            temp.setDate(column.next().getAttribute("title"));
-            temp.setStringTime(column.next().getText().trim());
+            String tempDate = column.next().getAttribute("title"); // title attribute is the date, i.e., Feb 21
+            String tempTime = column.next().getText().trim(); // entire duration of event, i.e., 4:00pm - 5:00pm
+
+            String startTime = tempTime.substring(0, tempTime.indexOf('—')).trim();
+            String endTime = tempTime.substring(tempTime.indexOf('—')+1).trim();
+
+            temp.setStartTime(DateUtils.getDateTimeObject(tempDate, startTime));
+            temp.setEndTime(DateUtils.getDateTimeObject(tempDate, endTime));
+
             temp.setRoom(column.next().getText().replace("\n", " ").trim());
             temp.setActivity(column.next().getText().replace("\n", " ").trim());
             temp.setFaculty(column.next().getText().replace("\n", " ").trim());
+
+
+
             listings.add(temp);
             System.out.print("Listing: ");
             System.out.println(temp);

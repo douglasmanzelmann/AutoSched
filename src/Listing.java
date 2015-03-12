@@ -1,46 +1,42 @@
-import java.util.Date;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Created by dmanzelmann on 2/11/15.
  */
 public class Listing {
-    Date day;
-    Date time;
-    String date;
-    String stringTime;
+    DateTime startTime;
+    DateTime endTime;
     String room;
     String activity;
     String faculty;
 
     public Listing() {}
 
-    public Listing(Date day, Date time, String room, String activity, String faculty) {
-        this.day = day;
-        this.time = time;
+    public Listing(DateTime startTime, DateTime endTime, String room, String activity, String faculty) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.room = room;
         this.activity = activity;
         this.faculty = faculty;
     }
 
-    public Date getDay() {
-        return day;
+    public void setStartTime(DateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
+    public DateTime getStartTime() {
+        return startTime;
     }
 
-    public void setDate(String date) { this.date = date; }
-
-    public Date getTime() {
-        return time;
+    public void setEndTime(DateTime endTime) {
+        this.endTime = endTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public DateTime getEndTime() {
+        return endTime;
     }
-
-    public void setStringTime(String stringTime) { this.stringTime = stringTime; }
 
     public String getRoom() {
         return room;
@@ -67,6 +63,8 @@ public class Listing {
     }
 
     public String toString() {
-        return date + " | " + stringTime + " | " + room + " | " + activity + " | " + faculty;
+        DateTimeFormatter startTimeFmt = DateTimeFormat.forPattern("M d h:mma");
+        DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
+        return startTime.toString(startTimeFmt) + " - " + endTime.toString(endTimeFmt) + " | " + room + " | " + activity + " | " + faculty;
     }
 }
