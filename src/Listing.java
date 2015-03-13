@@ -6,11 +6,13 @@ import org.joda.time.format.DateTimeFormatter;
  * Created by dmanzelmann on 2/11/15.
  */
 public class Listing {
-    DateTime startTime;
-    DateTime endTime;
-    String room;
-    String activity;
-    String faculty;
+    private DateTime startTime;
+    private DateTime endTime;
+    private String room;
+    private String className;
+    private String classDescription;
+    private String activity;
+    private String faculty;
 
     public Listing() {}
 
@@ -22,24 +24,20 @@ public class Listing {
         this.faculty = faculty;
     }
 
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public void setClassDescription(String classDescription) {
+        this.classDescription = classDescription;
+    }
+
     public void setStartTime(DateTime startTime) {
         this.startTime = startTime;
     }
 
-    public DateTime getStartTime() {
-        return startTime;
-    }
-
     public void setEndTime(DateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public DateTime getEndTime() {
-        return endTime;
-    }
-
-    public String getRoom() {
-        return room;
     }
 
     public void setRoom(String room) {
@@ -52,10 +50,6 @@ public class Listing {
 
     public void setActivity(String activity) {
         this.activity = activity;
-    }
-
-    public String getFaculty() {
-        return faculty;
     }
 
     public void setFaculty(String faculty) {
