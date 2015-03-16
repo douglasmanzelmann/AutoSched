@@ -10,7 +10,8 @@ public class AutoSched {
         List<Listing> listings = readSched.getListings();
 
         MediasiteSched mediasiteSched = new MediasiteSched(listings.stream()
-                .filter(l -> l.getActivity().contains("Recorded in Mediasite"))
-                .collect(Collectors.toList()));
+                    .filter(l -> l.getActivity().equals("Mediasite"))
+                    .collect(Collectors.toList()));
+
     }
 }

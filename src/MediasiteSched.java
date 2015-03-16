@@ -1,3 +1,4 @@
+import org.joda.time.LocalDate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,7 @@ public class MediasiteSched {
     WebElement login;
     WebElement schoolOfPharmacy;
     WebElement pharmD;
+    WebElement semester;
     WebDriverWait wait;
 
     public MediasiteSched(List<Listing> listings) {
@@ -54,9 +56,20 @@ public class MediasiteSched {
         wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("PharmD")));
         pharmD = driver.findElement(By.partialLinkText("PharmD"));
         pharmD.click();
+
+        int year = new LocalDate().getYear();
+        int month = new LocalDate().getMonthOfYear();
+        String semesterString = year + " " + DateUtils.getSemester(month);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(semesterString)));
+        semester = driver.findElement(By.partialLinkText(semesterString));
+        semester.click();
+
     }
 
     public static void main(String[] args) {
         //MediasiteSched mediasiteSched = new MediasiteSched();
+        //System.out.println(new LocalDate().getMonthOfYear());
+        System.out.println(new LocalDate().getYear() + " " + DateUtils.getSemester(new LocalDate().getMonthOfYear()));
     }
 }

@@ -68,10 +68,10 @@ public class ReadSched {
 
             //temp.setActivity(column.next().getText().replace("\n", " ").trim());
             //String[] classDetails;
-            List<String> classDetails = Arrays.asList(column.next().getText().split("\n"));
+            List<String> classDetails = Arrays.asList(column.next().getText().trim().split("\n"));
             if (classDetails.get(classDetails.size() -1).contains("Recorded in Mediasite")) {
                 temp.setClassName(classDetails.get(0));
-                temp.setClassDescription(classDetails.get(1));
+                temp.setClassDescription(classDetails.get(2)); // multiple white lines
                 temp.setActivity("Mediasite");
             }
             else if (classDetails.get(classDetails.size() -1).contains("Videoconference")) {
@@ -80,6 +80,18 @@ public class ReadSched {
             }
             // else if pre-record
             // also need to change autosched
+            else if (classDetails.get(0).contains("Pre-record")) {
+                temp.setClassName(classDetails.get(0).substring(0, classDetails.get(0).indexOf("Pre-record")));
+                temp.setClassDescription(classDetails.get(1));
+                temp.setActivity("Pre-record");
+            }
+            else {
+                String totalActivity = "";
+                for (String s : classDetails)
+                    totalActivity += s;
+
+                temp.setActivity(totalActivity);
+            }
 
 
 

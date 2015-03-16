@@ -32,6 +32,14 @@ public class Listing {
         this.classDescription = classDescription;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public String getClassDescription() {
+        return classDescription;
+    }
+
     public void setStartTime(DateTime startTime) {
         this.startTime = startTime;
     }
@@ -59,6 +67,7 @@ public class Listing {
     public String toString() {
         DateTimeFormatter startTimeFmt = DateTimeFormat.forPattern("M d h:mma");
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
-        return startTime.toString(startTimeFmt) + " - " + endTime.toString(endTimeFmt) + " | " + room + " | " + activity + " | " + faculty;
+        return startTime.toString(startTimeFmt) + " - " + endTime.toString(endTimeFmt) + " | " + room + " | " + activity
+                + " | " + className + " | " + classDescription + " | " + faculty;
     }
 }

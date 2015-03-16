@@ -74,11 +74,11 @@ public final class DateUtils {
 
         int hours = Integer.parseInt(timeField.substring(0, timeField.indexOf(':')));
 
-        if (amOrPm.equals("AM")) {
+        if (amOrPm.equals("AM") || hours == 12) {
             result = hours;
         }
         else {
-            result = hours + 11;
+            result = hours + 12;
         }
 
         return result;
@@ -92,6 +92,19 @@ public final class DateUtils {
 
         return result;
     }
+
+    public static String getSemester(int month) {
+        if (month >= 1 && month <= 5)
+            return "Spring";
+        else if (month >= 8 && month <= 12)
+            return "Fall";
+
+        return "";
+    }
+
+    //public static String getSemesterAbbreviation(int year, int month) {
+
+    //}
 
     public static void main(String[] args) {
 
