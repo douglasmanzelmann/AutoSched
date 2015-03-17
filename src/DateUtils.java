@@ -93,7 +93,7 @@ public final class DateUtils {
         return result;
     }
 
-    public static String getSemester(int month) {
+    public static String getCurrentSemester(int month) {
         if (month >= 1 && month <= 5)
             return "Spring";
         else if (month >= 8 && month <= 12)
@@ -102,9 +102,17 @@ public final class DateUtils {
         return "";
     }
 
-    //public static String getSemesterAbbreviation(int year, int month) {
+    public static String getCurrentSemesterAbbreviation(int year, int month) {
+        String semester = DateUtils.getCurrentSemester(month);
+        int yearAbbreviation = year % 100;
 
-    //}
+        if (semester.equals("Spring"))
+            return "SP" + yearAbbreviation;
+        else if (semester.equals("Fall"))
+            return "FA" + yearAbbreviation;
+
+        return "";
+    }
 
     public static void main(String[] args) {
 
@@ -115,5 +123,8 @@ public final class DateUtils {
         System.out.println("minutes 10:00 AM " + getMinutes("10:00 AM"));
 
         System.out.println(DateUtils.getDateTimeObject("Mar 12", "4:00 PM"));
+
+        System.out.println(2015 % 100);
+        System.out.println(DateUtils.getCurrentSemesterAbbreviation(2015, 3));
     }
 }

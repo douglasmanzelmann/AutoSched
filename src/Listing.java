@@ -64,6 +64,12 @@ public class Listing {
         this.faculty = faculty;
     }
 
+    public String getDateInMDYFormat() {
+        DateTimeFormatter MDYFmt = DateTimeFormat.forPattern("M/d/y");
+
+        return startTime.toString(MDYFmt);
+    }
+
     public String toString() {
         DateTimeFormatter startTimeFmt = DateTimeFormat.forPattern("M d h:mma");
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
