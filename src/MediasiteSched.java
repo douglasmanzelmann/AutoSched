@@ -26,7 +26,7 @@ public class MediasiteSched {
     WebElement semester;
     WebDriverWait wait;
 
-    public MediasiteSched(List<Listing> listings) {
+    public MediasiteSched(List<Listing> listings) throws InterruptedException {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
         this.listings = listings;
 
@@ -105,20 +105,48 @@ public class MediasiteSched {
             presentationDescription.sendKeys(mediasitePresentation.getClassDescription());
 
             //presenters
-            //js.executeScript("var list = document.getElementById('selectedPresentersList'); list.innerHTML = '';");
+            js.executeScript("var list = document.getElementById('selectedPresentersList'); list.innerHTML = '';");
             js.executeScript("document.getElementById('AddPresenter').style.display='inline-block';");
 
-            WebElement presentationPresenter = driver.findElement(By.id("AddPresenter"));
-            //Select presenterSelector = new Select(presentationPresenter);
-            //presenterSelector.selectByValue("AddExisting");
-            Actions actions = new Actions(driver);
-            actions.moveToElement(presentationPresenter).build().perform();//.moveToElement(driver.findElement(By.xpath("")));
+            //this will only add existing presenters. need logic for:
+            //-not finding an existing presenter
+            //-adding a new presenter
+            //needs to be abstracted into methods
+            for (String p : mediasitePresentation.getFaculty()) {
+                WebElement presentationPresenter = driver.findElement(By.id("AddPresenter"));
+                Actions actions = new Actions(driver);
+                actions.moveToElement(presentationPresenter).sendKeys(Keys.ARROW_DOWN).click().build().perform();//.moveToElement(driver.findElement(By.xpath("")));
+                WebElement addPresenter = driver.findElement(By.id("AddExisting"));
+                addPresenter.click();
+
+                //driver.switchTo().activeElement();
+                //Thread.sleep(5000);
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SearchTerm")));
+                WebElement presenterSearch = driver.findElement(By.id("SearchTerm"));
+                presenterSearch.sendKeys(p);
+                WebElement searchButton = driver.findElement(By.partialLinkText("Search"));
+                actions.moveToElement(searchButton).click().build().perform();
+                //searchButton.click();
+
+                Thread.sleep(5000);
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ResultsTable")));
+                List<WebElement> searchResults = driver.findElements(By.className("ResultsTable"));
+                if (searchResults.size() == 1) {
+                    WebElement selectPresenter = driver.findElement(By.id("Check"));
+                    selectPresenter.click();
+                    WebElement addSelected = driver.findElement(By.partialLinkText("Add Selected"));
+                    addSelected.click();
+                }
+            }
 
             //record date
-            /*WebElement presentationDate = driver.findElement(By.id("RecordDate"));
+            WebElement presentationDate = driver.findElement(By.id("RecordDate"));
             presentationDate.clear();
-            presentationDate.sendKeys(mediasitePresentation.getDateInMDYFormat());*/
+            presentationDate.sendKeys(mediasitePresentation.getDateInMDYFormat());
 
+            WebElement presentationTime = driver.findElement(By.id("Hour"));
+            presentationTime.clear();
+            presentationTime.sendKeys(mediasitePresentation.getStartHour());
             break;
         }
 

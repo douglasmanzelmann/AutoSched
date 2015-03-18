@@ -2,6 +2,10 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by dmanzelmann on 2/11/15.
  */
@@ -12,17 +16,9 @@ public class Listing {
     private String className;
     private String classDescription;
     private String activity;
-    private String faculty;
+    private List<String> faculty = new ArrayList<>();
 
     public Listing() {}
-
-    public Listing(DateTime startTime, DateTime endTime, String room, String activity, String faculty) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.room = room;
-        this.activity = activity;
-        this.faculty = faculty;
-    }
 
     public void setClassName(String className) {
         this.className = className;
@@ -44,6 +40,12 @@ public class Listing {
         this.startTime = startTime;
     }
 
+    public String getStartHour() {
+        DateTimeFormatter hourFmt = DateTimeFormat.forPattern("h");
+
+        return startTime.toString(hourFmt);
+    }
+
     public void setEndTime(DateTime endTime) {
         this.endTime = endTime;
     }
@@ -61,7 +63,22 @@ public class Listing {
     }
 
     public void setFaculty(String faculty) {
-        this.faculty = faculty;
+        if (faculty.indexOf("PHARMD") == 0) {
+            this.faculty.add("PHARMD");
+            return;
+        }
+
+        List<String> tempFaculty = Arrays.asList(faculty.split("\n"));
+
+        for (String temp : tempFaculty) {
+            if (!temp.contains("PHARMD")) {
+                this.faculty.add(temp);
+            }
+        }
+    }
+
+    public List<String> getFaculty() {
+        return faculty;
     }
 
     public String getDateInMDYFormat() {
@@ -74,6 +91,6 @@ public class Listing {
         DateTimeFormatter startTimeFmt = DateTimeFormat.forPattern("M d h:mma");
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
         return startTime.toString(startTimeFmt) + " - " + endTime.toString(endTimeFmt) + " | " + room + " | " + activity
-                + " | " + className + " | " + classDescription + " | " + faculty;
+                + " | " + className + " | " + classDescription + " | " + String.join(", ", faculty);
     }
 }

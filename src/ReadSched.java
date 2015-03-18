@@ -93,9 +93,7 @@ public class ReadSched {
                 temp.setActivity(totalActivity);
             }
 
-
-
-            temp.setFaculty(column.next().getText().replace("\n", " ").trim());
+            temp.setFaculty(column.next().getText().trim());
 
             listings.add(temp);
             //System.out.print("Listing: ");
