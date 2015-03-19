@@ -76,6 +76,7 @@ public class ReadSched {
             }
             else if (classDetails.get(classDetails.size() -1).contains("Videoconference")) {
                 temp.setClassName(classDetails.get(0));
+                temp.setClassDescription("Videoconference");
                 temp.setActivity("Videoconference");
             }
             // else if pre-record

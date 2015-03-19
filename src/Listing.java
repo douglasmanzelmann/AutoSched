@@ -1,4 +1,5 @@
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -46,6 +47,16 @@ public class Listing {
         return startTime.toString(hourFmt);
     }
 
+    public String getStartMinute() {
+        DateTimeFormatter minuteFmt = DateTimeFormat.forPattern("mm");
+        return startTime.toString(minuteFmt);
+    }
+
+
+    public String getamOrPm() {
+        DateTimeFormatter AMOrPM = DateTimeFormat.forPattern("a");
+        return startTime.toString(AMOrPM);
+    }
     public void setEndTime(DateTime endTime) {
         this.endTime = endTime;
     }
@@ -82,7 +93,7 @@ public class Listing {
     }
 
     public String getDateInMDYFormat() {
-        DateTimeFormatter MDYFmt = DateTimeFormat.forPattern("M/d/y");
+        DateTimeFormatter MDYFmt = DateTimeFormat.forPattern("MM/dd/y");
 
         return startTime.toString(MDYFmt);
     }
@@ -92,5 +103,9 @@ public class Listing {
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
         return startTime.toString(startTimeFmt) + " - " + endTime.toString(endTimeFmt) + " | " + room + " | " + activity
                 + " | " + className + " | " + classDescription + " | " + String.join(", ", faculty);
+    }
+
+    public static void main(String[] args) {
+
     }
 }

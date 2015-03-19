@@ -1,6 +1,7 @@
 import org.joda.time.LocalDate;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -73,12 +74,8 @@ public class MediasiteSched {
 
             //need to get the date of each presentation? no. don't think so.
             String classFolderString = DateUtils.getCurrentSemesterAbbreviation(year, month) + " " + classNumber;
-            System.out.println(classFolderString);
-
             wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(classFolderString)));
             WebElement classFolder = driver.findElement(By.partialLinkText(classFolderString));
-            //Actions rightClick = new Actions(driver);
-            //rightClick.contextClick(classFolder).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ARROW_DOWN).click().build().perform();
             classFolder.click();
 
 
@@ -97,8 +94,9 @@ public class MediasiteSched {
             //name
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Title")));
             WebElement presentationTitle = driver.findElement(By.id("Title"));
-            presentationTitle.sendKeys(mediasitePresentation.getClassName()); //needs a date at the end
-                                                                              //also needs logic for a, b, c, d...
+            presentationTitle.sendKeys(mediasitePresentation.getClassName() +
+                                        " " + mediasitePresentation.getDateInMDYFormat()); //needs a date at the end
+                                                                                           //also needs logic for a, b, c, d...
 
             //description
             WebElement presentationDescription = driver.findElement(By.id("Description"));
@@ -119,14 +117,11 @@ public class MediasiteSched {
                 WebElement addPresenter = driver.findElement(By.id("AddExisting"));
                 addPresenter.click();
 
-                //driver.switchTo().activeElement();
-                //Thread.sleep(5000);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SearchTerm")));
                 WebElement presenterSearch = driver.findElement(By.id("SearchTerm"));
                 presenterSearch.sendKeys(p);
                 WebElement searchButton = driver.findElement(By.partialLinkText("Search"));
                 actions.moveToElement(searchButton).click().build().perform();
-                //searchButton.click();
 
                 Thread.sleep(5000);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ResultsTable")));
@@ -139,14 +134,28 @@ public class MediasiteSched {
                 }
             }
 
+            //time
+            //hour
+            //requires funky javascript hack
+            WebElement presentationHour = driver.findElement(By.id("Hour"));
+            js.executeScript("arguments[0].value = '" + mediasitePresentation.getStartHour() + "';", presentationHour);
+            //minute
+            WebElement presentationMinute = driver.findElement(By.id("Minute"));
+            presentationMinute.clear();
+            presentationMinute.sendKeys(mediasitePresentation.getStartMinute());
+
+            WebElement amOrPm = driver.findElement(By.id("AmPm"));
+            Select morningOrNight = new Select(amOrPm);
+            if (mediasitePresentation.getamOrPm().equals("AM"))
+                morningOrNight.selectByValue("AM");
+            else
+                morningOrNight.selectByValue("PM");
+
             //record date
             WebElement presentationDate = driver.findElement(By.id("RecordDate"));
             presentationDate.clear();
             presentationDate.sendKeys(mediasitePresentation.getDateInMDYFormat());
-
-            WebElement presentationTime = driver.findElement(By.id("Hour"));
-            presentationTime.clear();
-            presentationTime.sendKeys(mediasitePresentation.getStartHour());
+            presentationTitle.click();
             break;
         }
 
