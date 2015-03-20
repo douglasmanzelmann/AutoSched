@@ -1,3 +1,4 @@
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -8,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
 
+import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -55,7 +58,18 @@ public class MediasiteSched {
         schoolOfPharmacy = driver.findElement(By.partialLinkText("School of Pharmacy"));
         schoolOfPharmacy.click();
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("PharmD")));
+        //this is for testing only
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Training")));
+        WebElement trainingFolder = driver.findElement(By.partialLinkText("Training"));
+        trainingFolder.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Testing")));
+        WebElement testingFolder = driver.findElement(By.partialLinkText("Testing"));
+        testingFolder.click();
+
+        //commented out this section for testing purposes.
+        //this section goes from SOP->PharmD->2015 Spring
+        /*wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("PharmD")));
         pharmD = driver.findElement(By.partialLinkText("PharmD"));
         pharmD.click();
 
@@ -65,18 +79,21 @@ public class MediasiteSched {
 
         wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(semesterString)));
         semester = driver.findElement(By.partialLinkText(semesterString));
-        semester.click();
+        semester.click();*/
 
         //keep in mind, these are all pharmd recordings. if there was ever a recording for another
         //program, this constructor would have to be generalized.
         for (Listing mediasitePresentation : listings) {
+            //As above, this section is commented out for testing
+            //will drive to training->testing instead
+            /*
             String classNumber = mediasitePresentation.getClassName().substring(0, mediasitePresentation.getClassName().indexOf(" "));
 
             //need to get the date of each presentation? no. don't think so.
             String classFolderString = DateUtils.getCurrentSemesterAbbreviation(year, month) + " " + classNumber;
             wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(classFolderString)));
             WebElement classFolder = driver.findElement(By.partialLinkText(classFolderString));
-            classFolder.click();
+            classFolder.click();*/
 
 
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("AddNewEntity_Element")));
@@ -110,29 +127,41 @@ public class MediasiteSched {
             //-not finding an existing presenter
             //-adding a new presenter
             //needs to be abstracted into methods
+
+            WebElement presentationPresenter = driver.findElement(By.id("AddPresenter"));
+            Actions actions = new Actions(driver);
+            actions.moveToElement(presentationPresenter).sendKeys(Keys.ARROW_DOWN).click().build().perform();//.moveToElement(driver.findElement(By.xpath("")));
+            WebElement addPresenter = driver.findElement(By.id("AddExisting"));
+            addPresenter.click();
             for (String p : mediasitePresentation.getFaculty()) {
-                WebElement presentationPresenter = driver.findElement(By.id("AddPresenter"));
-                Actions actions = new Actions(driver);
-                actions.moveToElement(presentationPresenter).sendKeys(Keys.ARROW_DOWN).click().build().perform();//.moveToElement(driver.findElement(By.xpath("")));
-                WebElement addPresenter = driver.findElement(By.id("AddExisting"));
-                addPresenter.click();
+                try {
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SearchTerm")));
+                    WebElement presenterSearch = driver.findElement(By.id("SearchTerm"));
+                    presenterSearch.clear();
+                    presenterSearch.sendKeys(p);
+                    WebElement searchButton = driver.findElement(By.partialLinkText("Search"));
+                    actions.moveToElement(searchButton).click().build().perform();
 
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SearchTerm")));
-                WebElement presenterSearch = driver.findElement(By.id("SearchTerm"));
-                presenterSearch.sendKeys(p);
-                WebElement searchButton = driver.findElement(By.partialLinkText("Search"));
-                actions.moveToElement(searchButton).click().build().perform();
+                    Thread.sleep(5000);
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ResultsTable")));
+                    List<WebElement> searchResults = driver.findElements(By.className("ResultsTable"));
+                    if (searchResults.size() == 1) {
+                        WebElement selectPresenter = driver.findElement(By.id("Check"));
+                        selectPresenter.click();
+                    }
+                } catch (TimeoutException e) {
+                    WebElement cancel = driver.findElement(By.id("SelectorCancel"));
+                    cancel.click();
 
-                Thread.sleep(5000);
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ResultsTable")));
-                List<WebElement> searchResults = driver.findElements(By.className("ResultsTable"));
-                if (searchResults.size() == 1) {
-                    WebElement selectPresenter = driver.findElement(By.id("Check"));
-                    selectPresenter.click();
-                    WebElement addSelected = driver.findElement(By.partialLinkText("Add Selected"));
-                    addSelected.click();
+                    Select select = new Select(presentationPresenter);
+                    select.selectByValue("AddNew");
+
+                    //need to fill in the form....
+
                 }
             }
+            WebElement addSelected = driver.findElement(By.partialLinkText("Add Selected"));
+            addSelected.click();
 
             //time
             //hour
@@ -156,14 +185,31 @@ public class MediasiteSched {
             presentationDate.clear();
             presentationDate.sendKeys(mediasitePresentation.getDateInMDYFormat());
             presentationTitle.click();
-            break;
+
+            //save
+            WebElement save = driver.findElement(By.id("Save"));
+            save.click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Status")));
+            //take screen shot
+
+            testingFolder.click();
         }
 
     }
 
-    public static void main(String[] args) {
-        //MediasiteSched mediasiteSched = new MediasiteSched();
+    public static void main(String[] args) throws InterruptedException {
+        List<Listing> testData = new ArrayList<>();
+        Listing test = new Listing();
+        test.setClassName("PHAR580 Pharmacy Law ");
+        test.setClassDescription("Substitution and Medical Errors ");
+        test.setStartTime(new DateTime());
+        test.setEndTime(new DateTime());
+        test.setActivity("Mediasite");
+        test.setFaculty("Bethman, Linda\nPalumbo, Frank");
+
+
+        MediasiteSched mediasiteSched = new MediasiteSched(testData);
         //System.out.println(new LocalDate().getMonthOfYear());
-        System.out.println(new LocalDate().getYear() + " " + DateUtils.getCurrentSemester(new LocalDate().getMonthOfYear()));
+        //System.out.println(new LocalDate().getYear() + " " + DateUtils.getCurrentSemester(new LocalDate().getMonthOfYear()));
     }
 }

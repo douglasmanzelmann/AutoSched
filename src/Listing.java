@@ -83,7 +83,8 @@ public class Listing {
 
         for (String temp : tempFaculty) {
             if (!temp.contains("PHARMD")) {
-                this.faculty.add(temp);
+                //this.faculty.add(temp);
+                this.faculty.add("Bob pooper");
             }
         }
     }
