@@ -12,7 +12,9 @@ import org.openqa.selenium.support.ui.Select;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -128,17 +130,23 @@ public class MediasiteSched {
             //-adding a new presenter
             //needs to be abstracted into methods
 
+            //copy faculty into a queue
+            Queue<String> presenterQueue = new ArrayBlockingQueue<String>(mediasitePresentation.getFaculty().size());
+            Queue<String> notExistingPresenters = new ArrayBlockingQueue<String>(mediasitePresentation.getFaculty().size());
+            for (String p : mediasitePresentation.getFaculty())
+                presenterQueue.add(p);
+
             WebElement presentationPresenter = driver.findElement(By.id("AddPresenter"));
             Actions actions = new Actions(driver);
             actions.moveToElement(presentationPresenter).sendKeys(Keys.ARROW_DOWN).click().build().perform();//.moveToElement(driver.findElement(By.xpath("")));
             WebElement addPresenter = driver.findElement(By.id("AddExisting"));
             addPresenter.click();
-            for (String p : mediasitePresentation.getFaculty()) {
+            while (presenterQueue.peek() != null) {
                 try {
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SearchTerm")));
                     WebElement presenterSearch = driver.findElement(By.id("SearchTerm"));
                     presenterSearch.clear();
-                    presenterSearch.sendKeys(p);
+                    presenterSearch.sendKeys(presenterQueue.peek());
                     WebElement searchButton = driver.findElement(By.partialLinkText("Search"));
                     actions.moveToElement(searchButton).click().build().perform();
 
@@ -150,18 +158,21 @@ public class MediasiteSched {
                         selectPresenter.click();
                     }
                 } catch (TimeoutException e) {
-                    WebElement cancel = driver.findElement(By.id("SelectorCancel"));
-                    cancel.click();
-
-                    Select select = new Select(presentationPresenter);
-                    select.selectByValue("AddNew");
-
-                    //need to fill in the form....
-
+                    notExistingPresenters.add(presenterQueue.poll());
                 }
+
+                presenterQueue.poll();
             }
             WebElement addSelected = driver.findElement(By.partialLinkText("Add Selected"));
             addSelected.click();
+
+            // add new presenters
+            while (notExistingPresenters.peek() != null) {
+                Select select = new Select(presentationPresenter);
+                select.selectByValue("AddNew");
+
+                //fill out add new presenter form
+            }
 
             //time
             //hour

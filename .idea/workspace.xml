@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c135be86-bea8-4ad9-89d6-7b6917f53568" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AutoSched.java" afterPath="$PROJECT_DIR$/src/AutoSched.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/EdasClient.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/axis.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Listing.java" afterPath="$PROJECT_DIR$/src/Listing.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MediasiteSched.java" afterPath="$PROJECT_DIR$/src/MediasiteSched.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ReadSched.java" afterPath="$PROJECT_DIR$/src/ReadSched.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AutoSched.iws" />
@@ -74,9 +74,15 @@
       <file leaf-file-name="ReadSched.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ReadSched.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1115" max-vertical-offset="1802">
-              <caret line="98" column="14" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="757" max-vertical-offset="1819">
+              <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#4301#4302#0" expanded="false" />
+                <element signature="e#4332#4333#0" expanded="false" />
+                <element signature="e#4379#4380#0" expanded="false" />
+                <element signature="e#4432#4433#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,8 +90,8 @@
       <file leaf-file-name="MediasiteSched.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MediasiteSched.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6525157" vertical-offset="2186" max-vertical-offset="2822">
-              <caret line="153" column="33" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6134454" vertical-offset="2576" max-vertical-offset="3944">
+              <caret line="173" column="49" selection-start-line="173" selection-start-column="49" selection-end-line="173" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -96,8 +102,8 @@
       <file leaf-file-name="Listing.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Listing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="299" max-vertical-offset="1292">
-              <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1547">
+              <caret line="86" column="43" selection-start-line="86" selection-start-column="43" selection-end-line="86" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -106,7 +112,7 @@
       <file leaf-file-name="DateUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DateUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1318" max-vertical-offset="2278">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1358" max-vertical-offset="2278">
               <caret line="127" column="78" selection-start-line="127" selection-start-column="78" selection-end-line="127" selection-end-column="78" />
               <folding />
             </state>
@@ -117,7 +123,7 @@
         <entry file="file://$PROJECT_DIR$/src/AutoSched.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-              <caret line="13" column="56" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+              <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -138,18 +144,19 @@
       <list>
         <option value="$PROJECT_DIR$/src/FormatDate.java" />
         <option value="$PROJECT_DIR$/src/DateUtils.java" />
-        <option value="$PROJECT_DIR$/src/ReadSched.java" />
         <option value="$PROJECT_DIR$/src/AutoSched.java" />
+        <option value="$PROJECT_DIR$/src/ReadSched.java" />
         <option value="$PROJECT_DIR$/src/Listing.java" />
+        <option value="$PROJECT_DIR$/src/testingMediasite.java" />
         <option value="$PROJECT_DIR$/src/MediasiteSched.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -177,7 +184,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -213,6 +219,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -222,8 +229,8 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/joda-time/joda-time-2.7/joda-time-2.7.jar!/" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="V:/Desktop/axis1.4/axis-1_4/lib/axis.jar!/" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15527344" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -302,7 +309,13 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="AutoSched" />
       <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -532,24 +545,41 @@
       <option name="project" value="LOCAL" />
       <updated>1426625291836</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Finishing off a simple, single presentation entry. need to fix starting time.">
+      <created>1426712129222</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1426712129222</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Mediasite submission basically finished, except clicking 'add presentation'. Need to handle A, B, C, etc, test multiple presenters, and handle new presenters.">
+      <created>1426793956758</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1426793956758</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added functionality for adding multiple existing presenters in Mediasite. Working on adding new presenters. Hard part is if one presenter is known, the other is not.">
+      <created>1426880963955</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1426880963955</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.342827" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32793522" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -557,11 +587,12 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2874494" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2879747" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -614,11 +645,14 @@
     <MESSAGE value="Currently refactoring ReadSched for added className/classDescription/activity fields. Need to update AutoSched stream().filter() in light of this." />
     <MESSAGE value="Adding methods to DateUtils to select folders in Mediasite." />
     <MESSAGE value="Adding presenters in Mediasite." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding presenters in Mediasite." />
+    <MESSAGE value="Finishing off a simple, single presentation entry. need to fix starting time." />
+    <MESSAGE value="Mediasite submission basically finished, except clicking 'add presentation'. Need to handle A, B, C, etc, test multiple presenters, and handle new presenters." />
+    <MESSAGE value="Added functionality for adding multiple existing presenters in Mediasite. Working on adding new presenters. Hard part is if one presenter is known, the other is not." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added functionality for adding multiple existing presenters in Mediasite. Working on adding new presenters. Hard part is if one presenter is known, the other is not." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -627,11 +661,73 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/AutoSched.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="374">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ReadSched.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1115" max-vertical-offset="1802">
           <caret line="98" column="14" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#4301#4302#0" expanded="false" />
+            <element signature="e#4332#4333#0" expanded="false" />
+            <element signature="e#4379#4380#0" expanded="false" />
+            <element signature="e#4432#4433#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MediasiteSched.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2822">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Listing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="299" max-vertical-offset="1292">
+          <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DateUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1318" max-vertical-offset="2278">
+          <caret line="127" column="78" selection-start-line="127" selection-start-column="78" selection-end-line="127" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AutoSched.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="374">
+          <caret line="13" column="56" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ReadSched.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1115" max-vertical-offset="1802">
+          <caret line="98" column="14" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#4301#4302#0" expanded="false" />
+            <element signature="e#4332#4333#0" expanded="false" />
+            <element signature="e#4379#4380#0" expanded="false" />
+            <element signature="e#4432#4433#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -913,8 +1009,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ReadSched.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1115" max-vertical-offset="1802">
-          <caret line="98" column="14" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="757" max-vertical-offset="1819">
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#4301#4302#0" expanded="false" />
+            <element signature="e#4332#4333#0" expanded="false" />
+            <element signature="e#4379#4380#0" expanded="false" />
+            <element signature="e#4432#4433#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AutoSched.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -927,26 +1037,154 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AutoSched.java">
+    <entry file="file:////private/Home/Desktop/External-Data-Access-Service--EDAS--6-1-13-Sample-Code-and-Documentation-1/EdasJavaClient/Source/ExternalAccessClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-          <caret line="13" column="56" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
-          <folding />
+        <state vertical-scroll-proportion="-6.3448277" vertical-offset="4474" max-vertical-offset="8143">
+          <caret line="921" column="8" selection-start-line="921" selection-start-column="8" selection-end-line="921" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ExternalAccessClient#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#SetImpersonationUserName#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateAuthTicket#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateIdentityTicket#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateMediaUpload#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateMediaUpload#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePresentationFromTemplate#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePresentationLike#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePresentationPoll#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateScheduleFromTemplate#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateUserProfile#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateUserProfileFromEmails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePresentationExternalLink#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePresentationForMediaUpload#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePresentationForMediaUpload#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePresentationFromTemplateReturnResponse#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#GetVersion#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#LoginWithImpersonation#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#Login#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#Logout#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryAuthTicketProperties#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryCatalogsById#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryCatalogShares#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryChapterPoints#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryClientDnsName#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryClientIpAddress#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryContentServerDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryFolderDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryFoldersWithPresentations#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryContentEncodingSettings#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPlayers#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationDetails#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentations#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationTemplateDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationTemplatesByCriteria#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationTemplates#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresenters#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentersByCriteria#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresenterDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryResourcePermissionList#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryResourcePermissions#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QuerySchedules#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QuerySchedules#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QuerySiteProperties#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QuerySlides#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QuerySubFolderDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryTimeZoneDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryTimeZones#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#RemoveAuthTicket#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#TestService#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdateSchedule#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdatePresentationDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationViews#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationDatesWatched#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationPlatformUsage#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationUserViews#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationUserDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationIPAddressViews#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationIPAddressDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserViews#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserDatesWatched#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserPlatformUsage#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserPresentationViews#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserPresentationDetails#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserIPAddressViews#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryServerUsage#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryServerPlatformUsage#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryActiveConnections#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryActivePresentations#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryActivePresentationConnections#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryRolesById#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryRoleByName#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryRoleByDirectoryEntry#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateRole#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdateRole#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateCatalogFromFolder#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreatePlayerLike#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteRole#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteCatalog#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteSchedule#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeletePresentation#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeletePlayer#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeletePresentationTemplate#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeletePodcast#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteMediaImportProject#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteContentEncodingSettings#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteContentServer#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeletePresentationContent#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdateResourcePermissions#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CheckJobStatus#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryKeyValueById#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryKeyValueByIdAndKey#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryMediasiteKeyValuesByKeyValue#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryMediasiteKeyValuesByCriteria#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfilesById#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfilesById#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfilesByEmailAddresses#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfilesByEmailAddressContains#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfilesByUserNameContains#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfilesByUserNameList#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfileDetailsById#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfileDetailsById#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfileDetailsByEmailAddresses#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfileDetailsByEmailAddressContains#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfileDetailsByUserNameContains#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryUserProfileDetailsByUserNameList#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateMediasiteKeyValue#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteMediasiteKeyValueByIdAndKey#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DeleteMediasiteKeyValueByKeyValue#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdateMediasiteKeyValueByIdsAndKey#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdateMediasiteKeyValueByIdsAndKey#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdateUserProfiles#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#UpdateUserProfiles#1;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#RefreshReportData#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#CreateRegistration#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#DisableRegistration#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#AddRegistrantsToResource#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#RemoveRegistrantsFromResource#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryResourceRegistrants#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryViewingTrends#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#QueryPresentationViewingSessions#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#setTicketAndImpersonation#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#getQueryClientIpAddressResponse#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#queryUserProfilesByCriteria#0;class#ExternalAccessClient#0" expanded="false" />
+            <element signature="method#queryUserProfileDetailsByCriteria#0;class#ExternalAccessClient#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Listing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="299" max-vertical-offset="1292">
-          <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1547">
+          <caret line="86" column="43" selection-start-line="86" selection-start-column="43" selection-end-line="86" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MediasiteSched.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6525157" vertical-offset="2186" max-vertical-offset="2822">
-          <caret line="153" column="33" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6134454" vertical-offset="2576" max-vertical-offset="3944">
+          <caret line="173" column="49" selection-start-line="173" selection-start-column="49" selection-end-line="173" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
