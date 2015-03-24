@@ -157,21 +157,34 @@ public class MediasiteSched {
                         WebElement selectPresenter = driver.findElement(By.id("Check"));
                         selectPresenter.click();
                     }
+                    presenterQueue.poll();
                 } catch (TimeoutException e) {
+                    System.out.println("In catch.");
                     notExistingPresenters.add(presenterQueue.poll());
                 }
-
-                presenterQueue.poll();
             }
             WebElement addSelected = driver.findElement(By.partialLinkText("Add Selected"));
             addSelected.click();
 
             // add new presenters
-            while (notExistingPresenters.peek() != null) {
+            if (notExistingPresenters.size() > 0) {
                 Select select = new Select(presentationPresenter);
                 select.selectByValue("AddNew");
 
-                //fill out add new presenter form
+                while (notExistingPresenters.peek() != null) {
+                    String newPresenter = notExistingPresenters.poll();
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("presenterAddEditForm")));
+                    WebElement lastName = driver.findElement(By.id("LastName"));
+                    lastName.sendKeys(newPresenter.substring(0, newPresenter.indexOf(",")));
+
+                    WebElement firstName = driver.findElement(By.id("AdditionalInfo"));
+                    firstName.sendKeys(newPresenter.substring(newPresenter.indexOf(",") + 1));
+                }
+
+                WebElement addNewDialog = driver.findElement(By.id("DialogPresenterSelector"));
+                WebElement save = addNewDialog.findElement(By.id("Save"));
+                //actions.moveToElement(save).click().build().perform();
+                save.click();
             }
 
             //time
@@ -211,12 +224,14 @@ public class MediasiteSched {
     public static void main(String[] args) throws InterruptedException {
         List<Listing> testData = new ArrayList<>();
         Listing test = new Listing();
-        test.setClassName("PHAR580 Pharmacy Law ");
+        test.setRoom("N103");
+        test.setClassName("PHAR580 Pharmacy Law");
         test.setClassDescription("Substitution and Medical Errors ");
+                test.setActivity("Mediasite");
         test.setStartTime(new DateTime());
         test.setEndTime(new DateTime());
-        test.setActivity("Mediasite");
-        test.setFaculty("Bethman, Linda\nPalumbo, Frank");
+        test.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
+        testData.add(test);
 
 
         MediasiteSched mediasiteSched = new MediasiteSched(testData);
