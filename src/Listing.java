@@ -100,6 +100,11 @@ public class Listing {
         return startTime.toString(MDYFmt);
     }
 
+    public String getDayOfWeek() {
+        DateTimeFormatter dayOfWeek = DateTimeFormat.forPattern("E");
+        return startTime.toString(dayOfWeek);
+    }
+
     public String toString() {
         DateTimeFormatter startTimeFmt = DateTimeFormat.forPattern("M d h:mma");
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");

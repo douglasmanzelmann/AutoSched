@@ -1,21 +1,12 @@
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
-
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by dmanzelmann on 3/13/2015.
@@ -23,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class MediasiteSched {
     Scanner input;
     List<Listing> listings;
+    HashMap<String, HashMap<DateTime, Integer>> duplicatesByDay;
     WebDriver driver;
     WebElement username;
     WebElement password;
@@ -35,6 +27,7 @@ public class MediasiteSched {
     public MediasiteSched(List<Listing> listings) throws InterruptedException {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
         this.listings = listings;
+        duplicatesByDay = new HashMap<>();
 
         input = new Scanner(System.in);
         // weird issue
@@ -85,6 +78,7 @@ public class MediasiteSched {
 
         //keep in mind, these are all pharmd recordings. if there was ever a recording for another
         //program, this constructor would have to be generalized.
+
         for (Listing mediasitePresentation : listings) {
             //As above, this section is commented out for testing
             //will drive to training->testing instead
@@ -219,6 +213,10 @@ public class MediasiteSched {
             testingFolder.click();
         }
 
+    }
+
+    private void markMultipleLecturesInADay() {
+        //listings.stream().()
     }
 
     public static void main(String[] args) throws InterruptedException {

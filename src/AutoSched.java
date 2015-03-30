@@ -8,10 +8,13 @@ public class AutoSched {
     public static void main(String[] args) throws InterruptedException {
         ReadSched readSched = new ReadSched();
         List<Listing> listings = readSched.getListings();
+        System.out.println("here");
 
-        MediasiteSched mediasiteSched = new MediasiteSched(listings.stream()
+        listings.stream().forEach(l -> l.getDayOfWeek());
+
+        /*MediasiteSched mediasiteSched = new MediasiteSched(listings.stream()
                     .filter(l -> l.getActivity().equals("Mediasite"))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList()));*/
 
     }
 }
