@@ -1,3 +1,6 @@
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -6,7 +9,14 @@ import java.util.stream.Collectors;
  */
 public class AutoSched {
     public static void main(String[] args) throws InterruptedException {
-        ReadSched readSched = new ReadSched();
+        // weird issue
+        // http://stackoverflow.com/questions/7615645/ssl-handshake-alert-unrecognized-name-error-since-upgrade-to-java-1-7-0
+        System.setProperty("jsse.enableSNIExtension", "false");
+
+        WebDriver driver = new FirefoxDriver();
+
+
+        ReadSched readSched = new ReadSched(driver);
         List<Listing> listings = readSched.getListings();
         System.out.println("here");
 

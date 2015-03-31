@@ -23,6 +23,78 @@ public class MediasiteSched {
     WebElement pharmD;
     WebElement semester;
     WebDriverWait wait;
+    int year;
+    int month;
+
+    public void setUsername(String userName) {
+        driver.findElement(By.id("UserName")).sendKeys(userName);
+    }
+
+    public void setPassword(String password) {
+        driver.findElement(By.id("Password")).sendKeys(password);
+    }
+
+    public void clickLogin() {
+        driver.findElement(By.tagName("input")).click();
+    }
+
+    public void navigateToSchoolOfPharmacy() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("School of Pharmacy")));
+        driver.findElement(By.partialLinkText("School of Pharmacy")).click();
+    }
+
+    public void navigateToPharmD() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("PharmD")));
+        driver.findElement(By.partialLinkText("PharmD")).click();
+    }
+
+    public void navigateToSemester(String semester) {
+        driver.findElement(By.partialLinkText(semester)).click();
+    }
+
+    public void navigateToClass(String className) {
+        driver.findElement(By.partialLinkText(className)).click();
+    }
+
+    public void addNewPresentation() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("AddNewEntity_Element")));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementById('AddNewEntity').style.display='inline-block';");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("PresentationAdd")));
+        WebElement addPresentation = driver.findElement(By.id("PresentationAdd"));
+        addPresentation.click();
+    }
+
+    public void selectTemplate(String template) {
+        //wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("SOP Standard Template (2014)")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(template)));
+        driver.findElement(By.partialLinkText(template)).click();
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    //i.e., "2015 Spring" or "2014 Fall"
+    public String getSemesterString(int year, int month) {
+        return year + " " + DateUtils.getCurrentSemester(month);
+    }
+
+    //i.e., Transform "PHAR5002 AST 2: Nutrition/Pain/Oncology" to "PHAR5002"
+    public String getClassString(String className) {
+        return className.substring(0, className.indexOf(" "));
+    }
+
+    //i.e., "SP15 PHAR5001"
+    public String getClassFolderString(int year, int month, String classString) {
+        return DateUtils.getCurrentSemesterAbbreviation(year, month) + " " + classString;
+    }
+
+
 
     public MediasiteSched(List<Listing> listings) throws InterruptedException {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
