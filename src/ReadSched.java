@@ -21,7 +21,6 @@ public class ReadSched {
     public ReadSched(WebDriver driver) {
         this.driver = driver;
         listings = new ArrayList<>();
-
     }
 
     public void setWeek(int year, int month, int day) {
