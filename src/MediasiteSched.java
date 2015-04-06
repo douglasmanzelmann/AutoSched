@@ -20,8 +20,13 @@ public class MediasiteSched {
     int year;
     int month;
 
-    public MediasiteSched(List<Listing> listings) throws InterruptedException {
+    public MediasiteSched(WebDriver driver) throws InterruptedException {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
+        //this.listings = listings;
+        this.driver = driver;
+    }
+
+    public void setListings(List<Listing> listings) {
         this.listings = listings;
     }
 
@@ -220,7 +225,7 @@ public class MediasiteSched {
         testData.add(test);
 
 
-        MediasiteSched mediasiteSched = new MediasiteSched(testData);
+        //MediasiteSched mediasiteSched = new MediasiteSched(testData);
         //System.out.println(new LocalDate().getMonthOfYear());
         //System.out.println(new LocalDate().getYear() + " " + DateUtils.getCurrentSemester(new LocalDate().getMonthOfYear()));
     }

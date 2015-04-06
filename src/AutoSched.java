@@ -1,6 +1,8 @@
+import org.joda.time.LocalDate;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -11,26 +13,18 @@ import java.util.stream.Collectors;
 public class AutoSched {
     private WebDriver driver;
     private ReadSched readSched;
+    private  MediasiteSched mediasiteSched;
 
-    public AutoSched() {
+    public AutoSched() throws InterruptedException {
         Scanner input = new Scanner(System.in);
         driver = new FirefoxDriver();
         readSched = new ReadSched(driver);
-
-    }
-
-    private void setPortalUserName(String userName) {
-        readSched.setUserName(userName);
-    }
-
-    private void setPortalPassword(String password) {
-        readSched.setPassword(password);
+        mediasiteSched = new MediasiteSched(driver);
     }
 
     public void loginToPortal(String userName, String password) {
-        setPortalUserName(userName);
-        setPortalPassword(password);
-
+        readSched.setUserName(userName);
+        readSched.setPassword(password);
         readSched.clickLogin();
     }
 
@@ -39,6 +33,24 @@ public class AutoSched {
     }
 
 
+    public void loginToMediasite(String userName, String password) {
+        driver.get("mediasite.umaryland.edu/mediasite/manage");
+
+        mediasiteSched.setUsername(userName);
+        mediasiteSched.setPassword(password);
+        mediasiteSched.clickLogin();
+
+        mediasiteSched.navigateToSchoolOfPharmacy();
+        mediasiteSched.navigateToPharmD();
+
+        LocalDate current = new LocalDate();
+        String currentSemester = current.getYear() + " " + DateUtils.getCurrentSemester(current.getMonthOfYear());
+        mediasiteSched.navigateToSemester(currentSemester);
+    }
+
+    public void setMediasiteListings(List<Listing> listings) {
+        mediasiteSched.setListings(listings);
+    }
 
     public static void main(String[] args) throws InterruptedException {
         // weird issue
@@ -56,22 +68,25 @@ public class AutoSched {
 
         schedule.visitPortalWeek(year, month, day);
 
-        System.out.println("Enter username: ");
+        System.out.print("Enter UMB Portal username: ");
         String userName = input.next();
-        System.out.println("Enter password: ");
+        System.out.print("Enter UMB Portal password: ");
         String password = input.next();
         schedule.loginToPortal(userName, password);
 
         schedule.readSched.readListings();
         List<Listing> listings = schedule.readSched.getListings();
 
-        listings.stream().forEach(l -> System.out.println(l.getDayOfWeek()));
+        //listings.stream().forEach(l -> System.out.println(l.getDayOfWeek()));
 
+        schedule.setMediasiteListings(listings.stream()
+                .filter(l -> l.getActivity().equals("Mediaiste"))
+                .collect(Collectors.toList()));
 
-
-        /*MediasiteSched mediasiteSched = new MediasiteSched(listings.stream()
-                    .filter(l -> l.getActivity().equals("Mediasite"))
-                    .collect(Collectors.toList()));*/
-
+        System.out.print("Enter Mediasite username: ");
+        userName = input.next();
+        System.out.print("Enter Mediasite password: ");
+        password = input.next();
+        schedule.loginToMediasite(userName, password);
     }
 }
