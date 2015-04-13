@@ -4,6 +4,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -39,17 +40,39 @@ public class AutoSched {
         mediasiteSched.setUsername(userName);
         mediasiteSched.setPassword(password);
         mediasiteSched.clickLogin();
-
-        mediasiteSched.navigateToSchoolOfPharmacy();
-        mediasiteSched.navigateToPharmD();
-
-        LocalDate current = new LocalDate();
-        String currentSemester = current.getYear() + " " + DateUtils.getCurrentSemester(current.getMonthOfYear());
-        mediasiteSched.navigateToSemester(currentSemester);
     }
 
-    public void setMediasiteListings(List<Listing> listings) {
-        mediasiteSched.setListings(listings);
+    public void createMediasitePresentations(List<Listing> listings, Boolean testing) throws InterruptedException {
+        if (testing) {
+            mediasiteSched.navigateToSchoolOfPharmacy();
+            mediasiteSched.navigateToTraining();
+            mediasiteSched.navigateToTesting();
+        } else {
+            mediasiteSched.navigateToSchoolOfPharmacy();
+            mediasiteSched.navigateToPharmD();
+            LocalDate current = new LocalDate();
+            String currentSemester = current.getYear() + " " + DateUtils.getCurrentSemester(current.getMonthOfYear());
+            mediasiteSched.navigateToSemester(currentSemester);
+        }
+
+        for (Listing presentation : listings) {
+            if (!testing) {
+                mediasiteSched.navigateToClass(presentation.getClassName());
+            }
+            else {
+                mediasiteSched.navigateToTesting();
+
+            }
+            mediasiteSched.addNewPresentation();
+            mediasiteSched.selectTemplate("SOP Standard Template (2014)");
+            mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat());
+            mediasiteSched.setDescription(presentation.getClassDescription());
+            Queue<String> faculty = presentation.getFacultyQueue();
+            mediasiteSched.setPresenters(faculty);
+            mediasiteSched.setTime(presentation.getStartHour(), presentation.getStartMinute(), presentation.getamOrPm());
+            mediasiteSched.setRecordDate(presentation.getDateInMDYFormat());
+            mediasiteSched.savePresentation();
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -77,16 +100,14 @@ public class AutoSched {
         schedule.readSched.readListings();
         List<Listing> listings = schedule.readSched.getListings();
 
-        //listings.stream().forEach(l -> System.out.println(l.getDayOfWeek()));
-
-        schedule.setMediasiteListings(listings.stream()
-                .filter(l -> l.getActivity().equals("Mediaiste"))
-                .collect(Collectors.toList()));
-
         System.out.print("Enter Mediasite username: ");
         userName = input.next();
         System.out.print("Enter Mediasite password: ");
         password = input.next();
         schedule.loginToMediasite(userName, password);
+        schedule.createMediasitePresentations(listings.stream()
+                .filter(l -> l.getActivity().equals("Mediasite"))
+                .collect(Collectors.toList()), true);
+
     }
 }

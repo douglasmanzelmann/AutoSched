@@ -6,6 +6,8 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by dmanzelmann on 2/11/15.
@@ -92,6 +94,15 @@ public class Listing {
 
     public List<String> getFaculty() {
         return faculty;
+    }
+
+    public Queue<String> getFacultyQueue() {
+        Queue<String> facultyQueue = new ArrayBlockingQueue<String>(faculty.size());
+
+        for (String f : faculty)
+            facultyQueue.add(f);
+
+        return facultyQueue;
     }
 
     public String getDateInMDYFormat() {

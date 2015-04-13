@@ -24,11 +24,12 @@ public class MediasiteSched {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
         //this.listings = listings;
         this.driver = driver;
+        wait = new WebDriverWait(driver, 30);
     }
 
-    public void setListings(List<Listing> listings) {
+    /*public void setListings(List<Listing> listings) {
         this.listings = listings;
-    }
+    } */
 
     public void setUsername(String userName) {
         driver.findElement(By.id("UserName")).sendKeys(userName);
@@ -39,7 +40,8 @@ public class MediasiteSched {
     }
 
     public void clickLogin() {
-        driver.findElement(By.tagName("input")).click();
+        driver.findElement(By.xpath("html/body/div[1]/div/div[2]/form/div/fieldset/p/input")).click();
+        //driver.findElement(By.tagName("input")).click();
     }
 
     public void navigateToSchoolOfPharmacy() {
@@ -53,11 +55,23 @@ public class MediasiteSched {
     }
 
     public void navigateToSemester(String semester) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(semester)));
         driver.findElement(By.partialLinkText(semester)).click();
     }
 
     public void navigateToClass(String className) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(className)));
         driver.findElement(By.partialLinkText(className)).click();
+    }
+
+    public void navigateToTraining() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Training")));
+        driver.findElement(By.partialLinkText("Training")).click();
+    }
+
+    public void navigateToTesting() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Testing")));
+        driver.findElement(By.partialLinkText("Testing")).click();
     }
 
     public void addNewPresentation() {
@@ -78,7 +92,7 @@ public class MediasiteSched {
     //i.e., "PHAR539 Medicinal Chemistry 2 04/01/2015", still missing A, B, C, D
     public void setTitle(String className, String dateInMDYFormat) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Title")));
-        driver.findElement(By.id("Title")).sendKeys(className, dateInMDYFormat);
+        driver.findElement(By.id("Title")).sendKeys(className + " " + dateInMDYFormat);
     }
 
     //i.e., "NSAIDS 1"
