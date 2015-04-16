@@ -55,11 +55,6 @@ public final class DateUtils {
                 break;
         }
 
-
-
-
-        //System.out.println("hour of day: " + hourOfDay + " minute of hour: " + minuteOfHour);
-
         DateTime dateTime = new DateTime(year, monthNumber, dayOfMonth, hourOfDay,
                 minuteOfHour, SECOND_OF_MINUTE, DateTimeZone.forID("America/New_York"));
 

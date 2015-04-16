@@ -1,4 +1,5 @@
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -224,6 +225,28 @@ public class MediasiteSched {
     //i.e., "SP15 PHAR5001"
     public String getClassFolderString(int year, int month, String classString) {
         return DateUtils.getCurrentSemesterAbbreviation(year, month) + " " + classString;
+    }
+
+    public static List<Listing> updateListingsForMultiples(List<Listing> mediasiteListings) {
+        Map<String, HashMap<LocalDate, Character>> multiples = new HashMap<>();
+
+        //this solution is O(n^2). Need a recursive solution, reversing the list ... which is also O(n^2)....
+        //need a bottom  up solution? But then the first "multiple" wouldn't be assigned a letter
+
+        /*for (Listing presentation : mediasiteListings) {
+            if (multiples.containsKey(presentation.getClassPrefix()) &&
+                    multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate())) {
+
+                // If PHAR559 has multiple recordings in one day, they need a unique ID (A, B, C, D, etc.).
+                char mutliVer = multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate());
+                mutliVer++;
+                presentation.setMultipleVer(mutliVer);
+            }
+
+            else if (multiples.containsKey(presentation.getClassPrefix()) &&
+                    !multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate()))  {
+                multiples.get(presentation.getClassPrefix()).put(presentation.getLocalDate(), 'A');
+            }*/
     }
 
     public static void main(String[] args) throws InterruptedException {

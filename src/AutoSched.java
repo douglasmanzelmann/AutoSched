@@ -2,10 +2,7 @@ import org.joda.time.LocalDate;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -43,6 +40,8 @@ public class AutoSched {
     }
 
     public void createMediasitePresentations(List<Listing> listings, Boolean testing) throws InterruptedException {
+
+
         if (testing) {
             mediasiteSched.navigateToSchoolOfPharmacy();
             mediasiteSched.navigateToTraining();
@@ -105,9 +104,14 @@ public class AutoSched {
         System.out.print("Enter Mediasite password: ");
         password = input.next();
         schedule.loginToMediasite(userName, password);
-        schedule.createMediasitePresentations(listings.stream()
+        /*schedule.createMediasitePresentations(listings.stream()
                 .filter(l -> l.getActivity().equals("Mediasite"))
-                .collect(Collectors.toList()), true);
+                .collect(Collectors.toList()), true);*/
+        List<Listing> mediasiteListings = listings.stream()
+                .filter(l -> l.getActivity().equals("Mediasite"))
+                .collect(Collectors.toList());
+
+        mediasiteListings = MediasiteSched.updateListingsForMultiples(mediasiteListings);
 
     }
 }

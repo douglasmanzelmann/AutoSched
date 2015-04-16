@@ -1,3 +1,4 @@
+import net.sf.cglib.core.Local;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -17,14 +18,17 @@ public class Listing {
     private DateTime endTime;
     private String room;
     private String className;
+    private String classPrefix;
     private String classDescription;
     private String activity;
+    private char multipleVer;
     private List<String> faculty = new ArrayList<>();
 
-    public Listing() {}
+    public Listing() {    }
 
     public void setClassName(String className) {
         this.className = className;
+        this.classPrefix = className.substring(0, className.indexOf(" "));
     }
 
     public void setClassDescription(String classDescription) {
@@ -33,6 +37,10 @@ public class Listing {
 
     public String getClassName() {
         return className;
+    }
+
+    public String getClassPrefix() {
+        return classPrefix;
     }
 
     public String getClassDescription() {
@@ -86,8 +94,6 @@ public class Listing {
         for (String temp : tempFaculty) {
             if (!temp.contains("PHARMD")) {
                 this.faculty.add(temp);
-                //this.faculty.add("Test, Test");
-                //this.faculty.add("Morgan, Jill");
             }
         }
     }
@@ -116,6 +122,18 @@ public class Listing {
         return startTime.toString(dayOfWeek);
     }
 
+    public LocalDate getLocalDate() {
+        return startTime.toLocalDate();
+    }
+
+    public char getMultipleVer() {
+        return multipleVer;
+    }
+
+    public void setMultipleVer(char multipleVer) {
+        this.multipleVer = multipleVer;
+    }
+
     public String toString() {
         DateTimeFormatter startTimeFmt = DateTimeFormat.forPattern("M d h:mma");
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
@@ -124,6 +142,9 @@ public class Listing {
     }
 
     public static void main(String[] args) {
+        Listing test = new Listing();
 
+        test.setClassName("PHMY513 Case-Based Management of Infectious Diseases");
+        System.out.println(test.getClassPrefix());
     }
 }
