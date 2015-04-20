@@ -12,6 +12,7 @@ public class AutoSched {
     private WebDriver driver;
     private ReadSched readSched;
     private  MediasiteSched mediasiteSched;
+    private Map<String, HashMap<LocalDate, Character>> multiples;
 
     public AutoSched() throws InterruptedException {
         Scanner input = new Scanner(System.in);
@@ -40,8 +41,6 @@ public class AutoSched {
     }
 
     public void createMediasitePresentations(List<Listing> listings, Boolean testing) throws InterruptedException {
-
-
         if (testing) {
             mediasiteSched.navigateToSchoolOfPharmacy();
             mediasiteSched.navigateToTraining();
@@ -64,7 +63,19 @@ public class AutoSched {
             }
             mediasiteSched.addNewPresentation();
             mediasiteSched.selectTemplate("SOP Standard Template (2014)");
-            mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat());
+
+            if (presentation.getMultipleVer() == 'A') {
+                if (multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate()) > 'A')
+                    mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat(),
+                            presentation.getMultipleVer());
+                else
+                    mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat());
+            }
+            else if (presentation.getMultipleVer() > 'A') {
+                mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat(),
+                        presentation.getMultipleVer());
+            }
+
             mediasiteSched.setDescription(presentation.getClassDescription());
             Queue<String> faculty = presentation.getFacultyQueue();
             mediasiteSched.setPresenters(faculty);
@@ -111,7 +122,8 @@ public class AutoSched {
                 .filter(l -> l.getActivity().equals("Mediasite"))
                 .collect(Collectors.toList());
 
-        mediasiteListings = MediasiteSched.updateListingsForMultiples(mediasiteListings);
-
+        // this method mutates mediasiteListings
+        schedule.multiples = MediasiteSched.updateListingsForMultiples(mediasiteListings);
+        schedule.createMediasitePresentations(mediasiteListings, true);
     }
 }

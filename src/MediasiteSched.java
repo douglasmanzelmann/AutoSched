@@ -14,7 +14,6 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class MediasiteSched {
     Scanner input;
-    List<Listing> listings;
     WebDriver driver;
     WebElement password;
     WebDriverWait wait;
@@ -94,6 +93,11 @@ public class MediasiteSched {
     public void setTitle(String className, String dateInMDYFormat) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Title")));
         driver.findElement(By.id("Title")).sendKeys(className + " " + dateInMDYFormat);
+    }
+
+    public void setTitle(String className, String dateInMDYFormat, char version) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Title")));
+        driver.findElement(By.id("Title")).sendKeys(className + " " + dateInMDYFormat + " " + version);
     }
 
     //i.e., "NSAIDS 1"
@@ -227,26 +231,32 @@ public class MediasiteSched {
         return DateUtils.getCurrentSemesterAbbreviation(year, month) + " " + classString;
     }
 
-    public static List<Listing> updateListingsForMultiples(List<Listing> mediasiteListings) {
+    public static Map<String, HashMap<LocalDate, Character>> updateListingsForMultiples(List<Listing> mediasiteListings) {
         Map<String, HashMap<LocalDate, Character>> multiples = new HashMap<>();
 
-        //this solution is O(n^2). Need a recursive solution, reversing the list ... which is also O(n^2)....
-        //need a bottom  up solution? But then the first "multiple" wouldn't be assigned a letter
-
-        /*for (Listing presentation : mediasiteListings) {
-            if (multiples.containsKey(presentation.getClassPrefix()) &&
-                    multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate())) {
-
-                // If PHAR559 has multiple recordings in one day, they need a unique ID (A, B, C, D, etc.).
-                char mutliVer = multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate());
-                mutliVer++;
-                presentation.setMultipleVer(mutliVer);
+        for (Listing presentation : mediasiteListings) {
+            if (!multiples.containsKey(presentation.getClassPrefix())) {
+                multiples.put(presentation.getClassPrefix(), new HashMap() {{
+                    put(presentation.getLocalDate(), 'A');
+                }});
+                presentation.setMultipleVer('A');
             }
 
-            else if (multiples.containsKey(presentation.getClassPrefix()) &&
-                    !multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate()))  {
-                multiples.get(presentation.getClassPrefix()).put(presentation.getLocalDate(), 'A');
-            }*/
+            else if (!multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate())) {
+                multiples.put(presentation.getClassPrefix(), new HashMap() {{
+                    put(presentation.getLocalDate(), 'A');
+                }});
+                presentation.setMultipleVer('A');
+            }
+
+            else if (multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate())) {
+                char multipleVer = multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate());
+                multipleVer++;
+                presentation.setMultipleVer(multipleVer);
+            }
+        }
+
+        return multiples;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -260,6 +270,33 @@ public class MediasiteSched {
         test.setEndTime(new DateTime());
         test.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
         testData.add(test);
+
+        Listing test2 = new Listing();
+        test2.setRoom("N103");
+        test2.setClassName("PHAR580 Pharmacy Law");
+        test2.setClassDescription("Blah blah blah");
+        test2.setActivity("Mediasite");
+        test2.setStartTime(new DateTime());
+        test2.setEndTime(new DateTime());
+        test2.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
+        testData.add(test2);
+
+        Listing test3 = new Listing();
+        test3.setRoom("N103");
+        test3.setClassName("PHAR559 Some Pharmacy Class");
+        test3.setClassDescription("Drugs are good, mmm kay");
+        test3.setActivity("Mediasite");
+        test3.setStartTime(new DateTime());
+        test3.setEndTime(new DateTime());
+        test3.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
+        testData.add(test3);
+
+
+        MediasiteSched.updateListingsForMultiples(testData);
+
+        for (Listing l : testData)
+            System.out.println(l.getClassName() + " " + l.getMultipleVer());
+
 
 
         //MediasiteSched mediasiteSched = new MediasiteSched(testData);
