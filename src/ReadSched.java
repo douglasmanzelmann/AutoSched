@@ -97,6 +97,7 @@ public class ReadSched {
             temp.setFaculty(column.next().getText().trim());
 
             listings.add(temp);
+            //System.out.println(temp);
         }
     }
 

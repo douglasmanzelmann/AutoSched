@@ -28,7 +28,13 @@ public class Listing {
 
     public void setClassName(String className) {
         this.className = className;
-        this.classPrefix = className.substring(0, className.indexOf(" "));
+
+        if (className.contains(" ")) {
+            this.classPrefix = className.substring(0, className.indexOf(" "));
+        }
+        else {
+            this.classPrefix = "";
+        }
     }
 
     public void setClassDescription(String classDescription) {
@@ -51,6 +57,10 @@ public class Listing {
         this.startTime = startTime;
     }
 
+    public DateTime getStartTime() {
+        return startTime;
+    }
+
     public String getStartHour() {
         DateTimeFormatter hourFmt = DateTimeFormat.forPattern("h");
 
@@ -71,8 +81,16 @@ public class Listing {
         this.endTime = endTime;
     }
 
+    public DateTime getEndTime() {
+        return  this.endTime;
+    }
+
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public String getRoom() {
+        return room;
     }
 
     public String getActivity() {
