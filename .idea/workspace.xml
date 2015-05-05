@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c135be86-bea8-4ad9-89d6-7b6917f53568" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Listing.java" afterPath="$PROJECT_DIR$/src/Listing.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ReadSched.java" afterPath="$PROJECT_DIR$/src/ReadSched.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DateUtils.java" afterPath="$PROJECT_DIR$/src/DateUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TMSSched.java" afterPath="$PROJECT_DIR$/src/TMSSched.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -74,13 +73,22 @@
         <entry file="file://$PROJECT_DIR$/src/ReadSched.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="2006">
-              <caret line="61" column="91" selection-start-line="61" selection-start-column="83" selection-end-line="61" selection-end-column="83" />
+              <caret line="61" column="83" selection-start-line="61" selection-start-column="83" selection-end-line="61" selection-end-column="83" />
               <folding>
+                <element signature="imports" expanded="false" />
                 <element signature="docComment;class#ReadSched#0" expanded="false" />
                 <element signature="method#ReadSched#0;class#ReadSched#0" expanded="false" />
                 <element signature="method#setWeek#0;class#ReadSched#0" expanded="false" />
+                <element signature="e#962#963#0" expanded="false" />
+                <element signature="e#1038#1039#0" expanded="false" />
+                <element signature="e#1086#1087#0" expanded="false" />
+                <element signature="e#1162#1163#0" expanded="false" />
+                <element signature="e#1194#1195#0" expanded="false" />
+                <element signature="e#1254#1255#0" expanded="false" />
                 <element signature="e#2530#2600#0" expanded="false" />
                 <element signature="e#3314#3335#0" expanded="false" />
+                <element signature="e#4076#4077#0" expanded="false" />
+                <element signature="e#4107#4108#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -89,16 +97,12 @@
       <file leaf-file-name="Listing.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Listing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.724138" vertical-offset="884" max-vertical-offset="2516">
-              <caret line="84" column="29" selection-start-line="84" selection-start-column="29" selection-end-line="84" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1615" max-vertical-offset="2448">
+              <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="134" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1486#1487#0" expanded="true" />
-                <element signature="e#1518#1519#0" expanded="true" />
                 <element signature="e#2105#2106#0" expanded="true" />
                 <element signature="e#2141#2142#0" expanded="true" />
-                <element signature="e#2244#2245#0" expanded="true" />
-                <element signature="e#2271#2272#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -107,8 +111,8 @@
       <file leaf-file-name="DateUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DateUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1182" max-vertical-offset="2193">
-              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1769" max-vertical-offset="2397">
+              <caret line="114" column="61" selection-start-line="114" selection-start-column="61" selection-end-line="114" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -117,8 +121,8 @@
       <file leaf-file-name="MediasiteSched.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MediasiteSched.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2164" max-vertical-offset="5100">
-              <caret line="145" column="28" selection-start-line="145" selection-start-column="22" selection-end-line="145" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2574" max-vertical-offset="5100">
+              <caret line="169" column="85" selection-start-line="169" selection-start-column="8" selection-end-line="169" selection-end-column="83" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -129,8 +133,8 @@
       <file leaf-file-name="TMSSched.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TMSSched.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0615641" vertical-offset="382" max-vertical-offset="1513">
-              <caret line="60" column="38" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
+            <state vertical-scroll-proportion="1.1353503" vertical-offset="18" max-vertical-offset="2584">
+              <caret line="43" column="70" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -175,20 +179,20 @@
         <option value="$PROJECT_DIR$/src/testingMediasite.java" />
         <option value="$PROJECT_DIR$/src/IntegerDivision.java" />
         <option value="$PROJECT_DIR$/src/MediasiteClient.java" />
-        <option value="$PROJECT_DIR$/src/DateUtils.java" />
         <option value="$PROJECT_DIR$/src/AutoSched.java" />
         <option value="$PROJECT_DIR$/src/MediasiteSched.java" />
         <option value="$PROJECT_DIR$/src/ReadSched.java" />
         <option value="$PROJECT_DIR$/src/Listing.java" />
+        <option value="$PROJECT_DIR$/src/DateUtils.java" />
         <option value="$PROJECT_DIR$/src/TMSSched.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1912" />
     <option name="y" value="-8" />
-    <option name="width" value="1664" />
-    <option name="height" value="1056" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -216,6 +220,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -251,7 +256,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -311,29 +315,6 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="AutoSched" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="AutoSched" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="AutoSched" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
     <configuration default="false" name="Listing" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="Listing" />
@@ -354,6 +335,23 @@
     <configuration default="false" name="TMSSched" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="TMSSched" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="AutoSched" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="DateUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="DateUtils" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -525,17 +523,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.ReadSched" />
       <item index="1" class="java.lang.String" itemvalue="Application.MediasiteSched" />
-      <item index="2" class="java.lang.String" itemvalue="Application.AutoSched" />
-      <item index="3" class="java.lang.String" itemvalue="Application.Listing" />
-      <item index="4" class="java.lang.String" itemvalue="Application.TMSSched" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Listing" />
+      <item index="3" class="java.lang.String" itemvalue="Application.TMSSched" />
+      <item index="4" class="java.lang.String" itemvalue="Application.DateUtils" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.TMSSched" />
-        <item index="1" class="java.lang.String" itemvalue="Application.ReadSched" />
-        <item index="2" class="java.lang.String" itemvalue="Application.MediasiteSched" />
-        <item index="3" class="java.lang.String" itemvalue="Application.Listing" />
-        <item index="4" class="java.lang.String" itemvalue="Application.AutoSched" />
+        <item index="1" class="java.lang.String" itemvalue="Application.DateUtils" />
+        <item index="2" class="java.lang.String" itemvalue="Application.ReadSched" />
+        <item index="3" class="java.lang.String" itemvalue="Application.MediasiteSched" />
+        <item index="4" class="java.lang.String" itemvalue="Application.Listing" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -668,11 +666,17 @@
       <option name="project" value="LOCAL" />
       <updated>1429562832254</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Working through adding a TMS slot.">
+      <created>1430772567363</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1430772567364</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1664" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -685,10 +689,10 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3364979" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3360324" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21458334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -762,7 +766,8 @@
     <MESSAGE value="Refactored. Now I can add in A, B, C, etc. for multiple classes in one day." />
     <MESSAGE value="Adding multiple sessions in a day. Looking for better than O(n^2)" />
     <MESSAGE value="Done with MediasiteSched. Starting TMSSched. Need to add Interface for all Scheds." />
-    <option name="LAST_COMMIT_MESSAGE" value="Done with MediasiteSched. Starting TMSSched. Need to add Interface for all Scheds." />
+    <MESSAGE value="Working through adding a TMS slot." />
+    <option name="LAST_COMMIT_MESSAGE" value="Working through adding a TMS slot." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -780,11 +785,20 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1115" max-vertical-offset="1802">
           <caret line="98" column="14" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
           <folding>
+            <element signature="imports" expanded="false" />
             <element signature="docComment;class#ReadSched#0" expanded="false" />
             <element signature="method#ReadSched#0;class#ReadSched#0" expanded="false" />
             <element signature="method#setWeek#0;class#ReadSched#0" expanded="false" />
+            <element signature="e#962#963#0" expanded="false" />
+            <element signature="e#1038#1039#0" expanded="false" />
+            <element signature="e#1086#1087#0" expanded="false" />
+            <element signature="e#1162#1163#0" expanded="false" />
+            <element signature="e#1194#1195#0" expanded="false" />
+            <element signature="e#1254#1255#0" expanded="false" />
             <element signature="e#2530#2600#0" expanded="false" />
             <element signature="e#3314#3335#0" expanded="false" />
+            <element signature="e#4076#4077#0" expanded="false" />
+            <element signature="e#4107#4108#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -805,12 +819,8 @@
           <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1486#1487#0" expanded="true" />
-            <element signature="e#1518#1519#0" expanded="true" />
             <element signature="e#2105#2106#0" expanded="true" />
             <element signature="e#2141#2142#0" expanded="true" />
-            <element signature="e#2244#2245#0" expanded="true" />
-            <element signature="e#2271#2272#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -836,11 +846,20 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1115" max-vertical-offset="1802">
           <caret line="98" column="14" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
           <folding>
+            <element signature="imports" expanded="false" />
             <element signature="docComment;class#ReadSched#0" expanded="false" />
             <element signature="method#ReadSched#0;class#ReadSched#0" expanded="false" />
             <element signature="method#setWeek#0;class#ReadSched#0" expanded="false" />
+            <element signature="e#962#963#0" expanded="false" />
+            <element signature="e#1038#1039#0" expanded="false" />
+            <element signature="e#1086#1087#0" expanded="false" />
+            <element signature="e#1162#1163#0" expanded="false" />
+            <element signature="e#1194#1195#0" expanded="false" />
+            <element signature="e#1254#1255#0" expanded="false" />
             <element signature="e#2530#2600#0" expanded="false" />
             <element signature="e#3314#3335#0" expanded="false" />
+            <element signature="e#4076#4077#0" expanded="false" />
+            <element signature="e#4107#4108#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -861,12 +880,8 @@
           <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1486#1487#0" expanded="true" />
-            <element signature="e#1518#1519#0" expanded="true" />
             <element signature="e#2105#2106#0" expanded="true" />
             <element signature="e#2141#2142#0" expanded="true" />
-            <element signature="e#2244#2245#0" expanded="true" />
-            <element signature="e#2271#2272#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1136,14 +1151,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DateUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1182" max-vertical-offset="2193">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Sched.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
@@ -1168,40 +1175,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Listing.java">
+    <entry file="file://$PROJECT_DIR$/src/ReadSched.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.724138" vertical-offset="884" max-vertical-offset="2516">
-          <caret line="84" column="29" selection-start-line="84" selection-start-column="29" selection-end-line="84" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="2006">
+          <caret line="61" column="83" selection-start-line="61" selection-start-column="83" selection-end-line="61" selection-end-column="83" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1486#1487#0" expanded="true" />
-            <element signature="e#1518#1519#0" expanded="true" />
-            <element signature="e#2105#2106#0" expanded="true" />
-            <element signature="e#2141#2142#0" expanded="true" />
-            <element signature="e#2244#2245#0" expanded="true" />
-            <element signature="e#2271#2272#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="docComment;class#ReadSched#0" expanded="false" />
+            <element signature="method#ReadSched#0;class#ReadSched#0" expanded="false" />
+            <element signature="method#setWeek#0;class#ReadSched#0" expanded="false" />
+            <element signature="e#962#963#0" expanded="false" />
+            <element signature="e#1038#1039#0" expanded="false" />
+            <element signature="e#1086#1087#0" expanded="false" />
+            <element signature="e#1162#1163#0" expanded="false" />
+            <element signature="e#1194#1195#0" expanded="false" />
+            <element signature="e#1254#1255#0" expanded="false" />
+            <element signature="e#2530#2600#0" expanded="false" />
+            <element signature="e#3314#3335#0" expanded="false" />
+            <element signature="e#4076#4077#0" expanded="false" />
+            <element signature="e#4107#4108#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReadSched.java">
+    <entry file="file://$PROJECT_DIR$/src/Listing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="2006">
-          <caret line="61" column="91" selection-start-line="61" selection-start-column="83" selection-end-line="61" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1615" max-vertical-offset="2448">
+          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="134" selection-end-column="42" />
           <folding>
-            <element signature="docComment;class#ReadSched#0" expanded="false" />
-            <element signature="method#ReadSched#0;class#ReadSched#0" expanded="false" />
-            <element signature="method#setWeek#0;class#ReadSched#0" expanded="false" />
-            <element signature="e#2530#2600#0" expanded="false" />
-            <element signature="e#3314#3335#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2105#2106#0" expanded="true" />
+            <element signature="e#2141#2142#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DateUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1769" max-vertical-offset="2397">
+          <caret line="114" column="61" selection-start-line="114" selection-start-column="61" selection-end-line="114" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MediasiteSched.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2164" max-vertical-offset="5100">
-          <caret line="145" column="28" selection-start-line="145" selection-start-column="22" selection-end-line="145" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2574" max-vertical-offset="5100">
+          <caret line="169" column="85" selection-start-line="169" selection-start-column="8" selection-end-line="169" selection-end-column="83" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1210,8 +1230,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TMSSched.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0615641" vertical-offset="382" max-vertical-offset="1513">
-          <caret line="60" column="38" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
+        <state vertical-scroll-proportion="1.1353503" vertical-offset="18" max-vertical-offset="2584">
+          <caret line="43" column="70" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

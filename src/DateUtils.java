@@ -1,6 +1,8 @@
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Created by dmanzelmann on 2/23/15.
@@ -109,6 +111,16 @@ public final class DateUtils {
         return "";
     }
 
+    public static String getTime(DateTime d) {
+        DateTimeFormatter time = DateTimeFormat.forPattern("h:mm a");
+        return d.toString(time);
+    }
+
+    public static String getDateInMDYFormat(DateTime d) {
+        DateTimeFormatter MDYFmt = DateTimeFormat.forPattern("MM/dd/y");
+        return d.toString(MDYFmt);
+    }
+
     public static void main(String[] args) {
 
         //DateUtils.getDateTimeObject("Feb 3");
@@ -121,5 +133,7 @@ public final class DateUtils {
 
         System.out.println(2015 % 100);
         System.out.println(DateUtils.getCurrentSemesterAbbreviation(2015, 3));
+
+        System.out.println(getTime(new DateTime()));
     }
 }
