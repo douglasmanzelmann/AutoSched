@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -9,26 +11,33 @@ public class AutoSchedGUI extends JFrame  {
     AutoSched sched;
 
     public AutoSchedGUI() throws InterruptedException {
-        //sched = new AutoSched();
+        System.setProperty("jsse.enableSNIExtension", "false");
+        sched = new AutoSched();
 
         pack();
         setLocationRelativeTo(null);
         setTitle("Weekly Schedule");
-        setSize(600, 600);
-        setMinimumSize(new Dimension(600, 600));
+        setSize(800, 800);
+        setMinimumSize(new Dimension(800, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLayout(new BorderLayout());
 
         // Panel Read Sched
         JPanel readSchedPanel = new JPanel();
+        readSchedPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(
+                                EtchedBorder.RAISED, Color.GRAY, Color.DARK_GRAY),
+                                "Read Schedule"));
+
 
         // Login info for ReadSched
         JPanel readSchedPanelLogin = new JPanel();
         JLabel userNameLabel = new JLabel("Enter username");
         JTextField userNameField = new JTextField(10);
         JLabel passwordLabel = new JLabel("Enter password");
-        JTextField passwordField = new JTextField(10);
+        JPasswordField passwordField = new JPasswordField(10);
         readSchedPanelLogin.add(userNameLabel);
         readSchedPanelLogin.add(userNameField);
         readSchedPanelLogin.add(passwordLabel);
@@ -37,9 +46,9 @@ public class AutoSchedGUI extends JFrame  {
 
         // Dates for ReadSched
         JPanel readSchedDates = new JPanel();
-        JTextField readSchedMonth = new JTextField("Month");
-        JTextField readSchedDay = new JTextField("Day");
-        JTextField readSchedYear = new JTextField("Year");
+        JTextField readSchedMonth = new JTextField("Month", 5);
+        JTextField readSchedDay = new JTextField("Day", 5);
+        JTextField readSchedYear = new JTextField("Year", 5);
         readSchedMonth.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -61,10 +70,47 @@ public class AutoSchedGUI extends JFrame  {
         readSchedDates.add(readSchedMonth);
         readSchedDates.add(readSchedDay);
         readSchedDates.add(readSchedYear);
-        readSchedPanel.add(readSchedDates);
 
+        // Start ReadSched with input
+        JButton startReadSched = new JButton("Read Schedule");
+        startReadSched.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int month = Integer.parseInt(readSchedMonth.getText());
+                int day = Integer.parseInt(readSchedDay.getText());
+                int year = Integer.parseInt(readSchedYear.getText());
+
+                // do not do this. defeats the purpose of getPassword.
+                // will need to refactor code for a char[] later.
+                String password = new String(passwordField.getPassword());
+
+                sched.visitPortalWeek(year, month, day);
+                sched.loginToPortal(userNameField.getText(), password);
+            }
+        });
+
+        readSchedPanel.add(readSchedDates);
+        readSchedPanel.add(startReadSched);
+
+        // Panel Mediasite Sched
+        JPanel tmsSchedPanel = new JPanel();
+        tmsSchedPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(
+                                EtchedBorder.RAISED, Color.GRAY, Color.DARK_GRAY),
+                        "TMS Login"));
+        JLabel tmsUserNameLabel = new JLabel("Enter username");
+        JTextField tmsUserNameField = new JTextField(10);
+        JLabel tmsPasswordLabel = new JLabel("Enter password");
+        JPasswordField tmsPasswordField = new JPasswordField(10);
+        tmsSchedPanel.add(tmsUserNameLabel);
+        tmsSchedPanel.add(tmsUserNameField);
+        tmsSchedPanel.add(tmsPasswordLabel);
+        tmsSchedPanel.add(tmsPasswordField);
+        tmsSchedPanel.add(readSchedPanelLogin);
 
         add(readSchedPanel);
+        add(tmsSchedPanel);
         validate();
     }
 

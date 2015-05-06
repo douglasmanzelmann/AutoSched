@@ -18,7 +18,7 @@ public class AutoSched {
         Scanner input = new Scanner(System.in);
         driver = new FirefoxDriver();
         readSched = new ReadSched(driver);
-        mediasiteSched = new MediasiteSched(driver);
+        //mediasiteSched = new MediasiteSched(driver);
     }
 
     public void loginToPortal(String userName, String password) {
