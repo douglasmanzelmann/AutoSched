@@ -21,14 +21,26 @@ public class AutoSched {
         //mediasiteSched = new MediasiteSched(driver);
     }
 
-    public void loginToPortal(String userName, String password) {
+    private void loginToPortal(String userName, String password) {
         readSched.setUserName(userName);
         readSched.setPassword(password);
         readSched.clickLogin();
     }
 
-    public void visitPortalWeek(int year, int month, int day) {
+    private void visitPortalWeek(int year, int month, int day) {
         readSched.setWeek(year, month, day);
+    }
+
+    public void readSched(String userName, String password, int year, int month, int day) {
+        readSched.setWeek(year, month, day);
+        readSched.setUserName(userName);
+        readSched.setPassword(password);
+        readSched.clickLogin();
+        readSched.readListings();
+    }
+
+    public List<Listing> getListings() {
+        return readSched.getListings();
     }
 
 

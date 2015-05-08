@@ -14,9 +14,10 @@ import java.util.stream.Collectors;
  * Created by dmanzelmann on 2/11/15.
  */
 public class ReadSched {
-    WebDriver driver;
-    WebDriverWait wait;
-    List<Listing> listings;
+    private WebDriver driver;
+    private WebDriverWait wait;
+    private List<Listing> listings;
+    private int totalListings;
 
     public ReadSched(WebDriver driver) {
         this.driver = driver;
@@ -49,6 +50,7 @@ public class ReadSched {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("agenda")));
         tableAgenda = driver.findElement(By.id("agenda"));
         tableAgendaRows = tableAgenda.findElements(By.tagName("tr"));
+        totalListings = tableAgendaRows.size();
         listings = new ArrayList<>();
 
         for (WebElement row : tableAgendaRows) {
@@ -103,6 +105,10 @@ public class ReadSched {
 
     public List<Listing> getListings() {
         return listings;
+    }
+
+    public int getTotalListings() {
+        return totalListings;
     }
 
 

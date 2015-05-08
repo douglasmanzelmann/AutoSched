@@ -31,15 +31,12 @@ public class TMSSched {
         driver.switchTo().activeElement().click();
     }
 
-    public void scheduleVTC(String userName, String password, String baltimoreRoom, String sgRoom, DateTime start, DateTime end) {
-        driver.get("http://" + userName + ":" + password + "@" + "tms.rx.umaryland.edu/tms/default.aspx?pageId=116");
-
+    public void selectTemplate(String baltimoreRoom, String sgRoom) {
         WebElement template;
 
         try {
             template = driver.findElement(By.partialLinkText(chooseCodec(baltimoreRoom) + " - " + sgRoom));
-        }
-        catch (org.openqa.selenium.NoSuchElementException e) {
+        } catch (org.openqa.selenium.NoSuchElementException e) {
             template = driver.findElement(By.partialLinkText(chooseCodec(baltimoreRoom) + "- " + sgRoom));
         }
 
@@ -47,8 +44,10 @@ public class TMSSched {
         Actions action = new Actions(driver);
         action.moveToElement(template).moveByOffset(50,0).click().build().perform();
         driver.findElement(By.partialLinkText("Use As Conference")).click();
+    }
 
-        //select the user for this conference
+
+    public void selectUser(String userName) {
         driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_uxUserSelector_uxSelectUsersButton\"]")).click();
         Set<String> handles = driver.getWindowHandles();
         Iterator<String> iterator = handles.iterator();
@@ -57,22 +56,26 @@ public class TMSSched {
         driver.switchTo().window(userWindow);
         driver.findElement(By.partialLinkText("Manzelmann")).click();
         driver.switchTo().window(mainWindow);
+    }
 
-        //select start date and time
-        //start date
-        WebElement startDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpStartDate_textBox\"]"));
+    public void selectStartDateAndTime(DateTime start) {
+        WebElement startDate;
         try {
+            startDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpStartDate_textBox\"]"));
             startDate.clear();
         }  catch (org.openqa.selenium.StaleElementReferenceException e) {
             startDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpStartDate_textBox\"]"));
             startDate.clear();
             startDate.sendKeys(DateUtils.getDateInMDYFormat(start));
         }
+
         //start time
         WebElement startTime = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_tbStartTime\"]"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value = '" + DateUtils.getTime(start) + "';", startTime);
+    }
 
+    public void selectEndDateAndTime(DateTime end) {
         //select end date and time
         //end date
         WebElement endDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpEndDate_textBox\"]"));
@@ -85,18 +88,36 @@ public class TMSSched {
         }
         //end time
         WebElement endTime = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_tbEndTime\"]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value = '" + DateUtils.getTime(end) + "';", endTime);
+    }
 
-        //submit
+    public void submit() {
         driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_saveButton\"]")).click();
+    }
 
-        //check to see if codec is busy
+    public boolean checkIfCodecIsInUse() {
         String errorMessage = "The system is already scheduled to be used at this time";
 
         try {
             driver.findElement(By.xpath("//*[contains(text(),'" + errorMessage + "') ]"));
-            scheduleVTC(userName, password, "vtc4", sgRoom, start, end);
+            return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {  }
+
+        return false;
+    }
+
+    public void scheduleVTC(String userName, String password, String baltimoreRoom, String sgRoom, DateTime start, DateTime end) {
+        driver.get("http://" + userName + ":" + password + "@" + "tms.rx.umaryland.edu/tms/default.aspx?pageId=116");
+
+        selectTemplate(baltimoreRoom, sgRoom);
+        selectUser(userName);
+        selectStartDateAndTime(start);
+        selectEndDateAndTime(end);
+        submit();
+        if (checkIfCodecIsInUse())
+            scheduleVTC(userName, password, "vtc4", sgRoom, start, end);
+
     }
 
     private static String chooseCodec(String baltimoreRoom) {
