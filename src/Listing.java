@@ -1,6 +1,7 @@
 import net.sf.cglib.core.Local;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -59,6 +60,10 @@ public class Listing {
 
     public DateTime getStartTime() {
         return startTime;
+    }
+
+    public LocalTime getStartTimeInLocalTimeFormat() {
+        return startTime.toLocalTime();
     }
 
     public String getStartHour() {
@@ -136,7 +141,7 @@ public class Listing {
     }
 
     public String getDayOfWeek() {
-        DateTimeFormatter dayOfWeek = DateTimeFormat.forPattern("E");
+        DateTimeFormatter dayOfWeek = DateTimeFormat.forPattern("EEEE");
         return startTime.toString(dayOfWeek);
     }
 
@@ -161,6 +166,9 @@ public class Listing {
 
     public static void main(String[] args) {
         Listing test = new Listing();
+        test.setStartTime(new DateTime());
+        System.out.println(test.getDayOfWeek());
+        System.out.println(test.getStartTimeInLocalTimeFormat());
 
         test.setClassName("PHMY513 Case-Based Management of Infectious Diseases");
         System.out.println(test.getClassPrefix());
