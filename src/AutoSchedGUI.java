@@ -1,9 +1,7 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import java.util.List;
 
 /**
@@ -16,7 +14,9 @@ public class AutoSchedGUI extends JFrame  {
     public AutoSchedGUI() throws InterruptedException {
         System.setProperty("jsse.enableSNIExtension", "false");
         sched = new AutoSched();
-        JPanel displaySchedulePanel = new JPanel(new GridLayout(0, 1));
+
+        // Two columns: One with the schedule listing; Two with the completion status
+        JPanel displaySchedulePanel = new JPanel(new GridLayout(0, 2));
         JScrollPane listingScrollPane = new JScrollPane(displaySchedulePanel,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -42,12 +42,13 @@ public class AutoSchedGUI extends JFrame  {
 
         // Login info for ReadSched
         JPanel readSchedPanelLogin = new JPanel();
-        JLabel userNameLabel = new JLabel("Enter username");
-        JTextField userNameField = new JTextField(10);
+        JLabel userNameLabel = new JLabel("Select username");
+        //JTextField userNameField = new JTextField(10);
+        JComboBox userNameBox = new JComboBox(Profiles.getProfiles());
         JLabel passwordLabel = new JLabel("Enter password");
         JPasswordField passwordField = new JPasswordField(10);
         readSchedPanelLogin.add(userNameLabel);
-        readSchedPanelLogin.add(userNameField);
+        readSchedPanelLogin.add(userNameBox);
         readSchedPanelLogin.add(passwordLabel);
         readSchedPanelLogin.add(passwordField);
         readSchedPanel.add(readSchedPanelLogin);
@@ -91,15 +92,13 @@ public class AutoSchedGUI extends JFrame  {
                 // do not do this. defeats the purpose of getPassword.
                 // will need to refactor code for a char[] later.
                 String password = new String(passwordField.getPassword());
-
-                //sched.visitPortalWeek(year, month, day);
-                //sched.loginToPortal(userNameField.getText(), password);
-                sched.readSched(userNameField.getText(), password, year, month, day);
-                schedule = sched.getListings();
+                sched.readSched((String)userNameBox.getSelectedItem(), password, year, month, day);
+                schedule = Profiles.filter((String) userNameBox.getSelectedItem(), sched.getListings());
 
 
                 for (Listing l : schedule) {
                     JButton current = new JButton();
+                    StatusButton currentStatus = new StatusButton("Not Started");
                     current.setHorizontalAlignment(SwingConstants.LEFT);
 
                     if (l.getActivity().equals("Mediasite"))
@@ -111,8 +110,11 @@ public class AutoSchedGUI extends JFrame  {
                     else
                         current.setBackground(Color.gray);
 
+
                     current.setText(l.toString());
+                    l.addObserver(currentStatus);
                     displaySchedulePanel.add(current);
+                    displaySchedulePanel.add(currentStatus);
 
                 }
 
@@ -146,18 +148,6 @@ public class AutoSchedGUI extends JFrame  {
         JPanel loginPanel = new JPanel(new BorderLayout());
         loginPanel.add(readSchedPanel, BorderLayout.PAGE_START);
         loginPanel.add(tmsSchedPanel, BorderLayout.PAGE_END);
-
-        // Create a content panel and add the individual panels
-
-
-        // Display the content of the schedule
-        //JPanel displaySchedulePanel = new JPanel(new GridLayout(0, 1));
-        //JTextArea listingTextArea = new JTextArea();
-        //listingTextArea.setText("");
-        //JScrollPane listingScrollPane = new JScrollPane(displaySchedulePanel);
-        //JPanel schedulePanel = new JPanel();
-        //schedulePanel.add(listingScrollPane);
-       //displaySchedulePanel.add(listingScrollPane);
 
         // Display Progress Bars
         JProgressBar readSchedProgressBar = new JProgressBar();

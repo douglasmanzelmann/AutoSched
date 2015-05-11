@@ -13,7 +13,6 @@ import java.util.concurrent.ArrayBlockingQueue;
  * Created by dmanzelmann on 3/13/2015.
  */
 public class MediasiteSched {
-    Scanner input;
     WebDriver driver;
     WebElement password;
     WebDriverWait wait;

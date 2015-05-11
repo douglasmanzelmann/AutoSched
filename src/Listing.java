@@ -5,16 +5,14 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
+import java.io.File;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by dmanzelmann on 2/11/15.
  */
-public class Listing {
+public class Listing extends Observable {
     private DateTime startTime;
     private DateTime endTime;
     private String room;
@@ -23,9 +21,16 @@ public class Listing {
     private String classDescription;
     private String activity;
     private char multipleVer;
-    private List<String> faculty = new ArrayList<>();
+    private List<String> faculty;
+    private boolean scheduled;
+    private boolean error;
+    private File scrFile;
 
-    public Listing() {    }
+    public Listing() {
+        faculty = new ArrayList<>();
+        scheduled = false;
+        error = false;
+    }
 
     public void setClassName(String className) {
         this.className = className;
@@ -162,6 +167,18 @@ public class Listing {
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
         return startTime.toString(startTimeFmt) + " - " + endTime.toString(endTimeFmt) + " | " + room + " | " + activity
                 + " | " + className + " | " + classDescription + " | " + String.join(", ", faculty);
+    }
+
+    public void setScheduled() {
+        scheduled = true;
+        setChanged();
+        notifyObservers("Scheduled successfully");
+    }
+
+    public void setError() {
+        error = true;
+        setChanged();
+        notifyObservers("Failed to schedule");
     }
 
     public static void main(String[] args) {
