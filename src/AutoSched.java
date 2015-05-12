@@ -1,8 +1,9 @@
 import org.joda.time.LocalDate;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 
 /**
@@ -11,14 +12,15 @@ import java.util.stream.Collectors;
 public class AutoSched {
     private WebDriver driver;
     private ReadSched readSched;
-    private  MediasiteSched mediasiteSched;
+    private MediasiteSched mediasiteSched;
+    private TMSSched tmsSched;
     private Map<String, HashMap<LocalDate, Character>> multiples;
+    private List<Listing> listings;
 
-    public AutoSched() throws InterruptedException {
-        Scanner input = new Scanner(System.in);
+    public AutoSched() {
         driver = new FirefoxDriver();
         readSched = new ReadSched(driver);
-        //mediasiteSched = new MediasiteSched(driver);
+        mediasiteSched = new MediasiteSched(driver);
     }
 
     private void loginToPortal(String userName, String password) {
@@ -37,63 +39,69 @@ public class AutoSched {
         readSched.setPassword(password);
         readSched.clickLogin();
         readSched.readListings();
+        listings = readSched.getListings();
+        multiples = MediasiteSched.updateListingsForMultiples(listings);
     }
 
     public List<Listing> getListings() {
         return readSched.getListings();
     }
 
-
     public void loginToMediasite(String userName, String password) {
         driver.get("mediasite.umaryland.edu/mediasite/manage");
 
-        mediasiteSched.setUsername(userName);
-        mediasiteSched.setPassword(password);
-        mediasiteSched.clickLogin();
+        mediasiteSched.loginToMediasite(userName, password);
     }
 
-    public void createMediasitePresentations(List<Listing> listings, Boolean testing) throws InterruptedException {
-        if (testing) {
-            mediasiteSched.navigateToSchoolOfPharmacy();
-            mediasiteSched.navigateToTraining();
-            mediasiteSched.navigateToTesting();
-        } else {
-            mediasiteSched.navigateToSchoolOfPharmacy();
-            mediasiteSched.navigateToPharmD();
-            LocalDate current = new LocalDate();
-            String currentSemester = current.getYear() + " " + DateUtils.getCurrentSemester(current.getMonthOfYear());
-            mediasiteSched.navigateToSemester(currentSemester);
-        }
-
+    public void createMediasitePresentations(List<Listing> listings, Boolean testing) {
+        Queue<String> folders = new ArrayBlockingQueue<>(5);
         for (Listing presentation : listings) {
-            if (!testing) {
-                mediasiteSched.navigateToClass(presentation.getClassName());
-            }
-            else {
-                mediasiteSched.navigateToTesting();
 
+            if (testing) {
+                folders.add("School of Pharmacy");
+                folders.add("Training");
+                folders.add("Testing");
+            } else {
+                folders.add("School of Pharamcy");
+                folders.add("PharmD");
+                LocalDate presentationDate = presentation.getLocalDate();
+                folders.add(presentationDate.getYear() + " " + DateUtils.getCurrentSemester(presentationDate.getMonthOfYear()));
+                folders.add(DateUtils.getCurrentSemesterAbbreviation(presentationDate.getYear(), presentationDate.getMonthOfYear()));
             }
-            mediasiteSched.addNewPresentation();
-            mediasiteSched.selectTemplate("SOP Standard Template (2014)");
+
+            String title = "";
+            if (multiples.isEmpty())
+                System.out.println("multiples is empty");
+
+            if (multiples.containsKey(presentation.getClassPrefix()))
+                System.out.println("yes");
+
+
+            System.out.println(presentation.getLocalDate());
+            System.out.println(presentation.getMultipleVer());
+            System.out.println(presentation.getClassPrefix());
+            System.out.println(multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate()));
+
+
 
             if (presentation.getMultipleVer() == 'A') {
                 if (multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate()) > 'A')
-                    mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat(),
-                            presentation.getMultipleVer());
+                   title = presentation.getClassName() + " " + presentation.getDateInMDYFormat() + " " + presentation.getMultipleVer();
                 else
-                    mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat());
+                    title = presentation.getClassName() + " " + presentation.getDateInMDYFormat();
             }
             else if (presentation.getMultipleVer() > 'A') {
-                mediasiteSched.setTitle(presentation.getClassName(), presentation.getDateInMDYFormat(),
-                        presentation.getMultipleVer());
+                title = presentation.getClassName() + " " + presentation.getDateInMDYFormat() + " " + presentation.getMultipleVer();
             }
 
-            mediasiteSched.setDescription(presentation.getClassDescription());
-            Queue<String> faculty = presentation.getFacultyQueue();
-            mediasiteSched.setPresenters(faculty);
-            mediasiteSched.setTime(presentation.getStartHour(), presentation.getStartMinute(), presentation.getamOrPm());
-            mediasiteSched.setRecordDate(presentation.getDateInMDYFormat());
-            mediasiteSched.savePresentation();
+
+            try {
+                mediasiteSched.createMediasitePresentation(folders, title, presentation.getClassDescription(), presentation.getFacultyQueue(),
+                        presentation.getStartHour(), presentation.getStartMinute(), presentation.getamOrPm(), presentation.getDateInMDYFormat());
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                presentation.setError(e);
+            }
+
         }
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by dmanzelmann on 5/6/2015.
  */
-public class AutoSchedGUI extends JFrame  {
+public class AutoSchedGUI extends JFrame implements ActionListener {
     AutoSched sched;
     List<Listing> schedule;
 
@@ -91,9 +91,10 @@ public class AutoSchedGUI extends JFrame  {
 
                 // do not do this. defeats the purpose of getPassword.
                 // will need to refactor code for a char[] later.
+                String username = (String)userNameBox.getSelectedItem();
                 String password = new String(passwordField.getPassword());
-                sched.readSched((String)userNameBox.getSelectedItem(), password, year, month, day);
-                schedule = Profiles.filter((String) userNameBox.getSelectedItem(), sched.getListings());
+                sched.readSched(username, password, year, month, day);
+                schedule = Profiles.filter((String) username, sched.getListings());
 
 
                 for (Listing l : schedule) {
@@ -117,23 +118,25 @@ public class AutoSchedGUI extends JFrame  {
                     displaySchedulePanel.add(currentStatus);
 
                 }
-
-                listingScrollPane.repaint();
+                //listingScrollPane.repaint();
                 revalidate();
                 repaint();
+                sched.loginToMediasite(username, password);
+                sched.createMediasitePresentations(schedule, true);
             }
         });
 
         readSchedPanel.add(readSchedDates);
         readSchedPanel.add(startReadSched);
 
-        // Panel Mediasite Sched
+
+        // Panel tmsSched Sched
         JPanel tmsSchedPanel = new JPanel();
         tmsSchedPanel.setBorder(
                 BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(
                                 EtchedBorder.RAISED, Color.GRAY, Color.DARK_GRAY),
-                        "TMS Login"));
+                        "TMS"));
 
         JLabel tmsUserNameLabel = new JLabel("Enter username");
         JTextField tmsUserNameField = new JTextField(10);
@@ -165,6 +168,10 @@ public class AutoSchedGUI extends JFrame  {
         pack();
         setVisible(true);
         validate();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
     }
 
 

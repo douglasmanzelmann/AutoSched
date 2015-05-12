@@ -1,6 +1,8 @@
+import net.sf.cglib.core.Local;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +21,7 @@ public class MediasiteSched {
     int year;
     int month;
 
-    public MediasiteSched(WebDriver driver) throws InterruptedException {
+    public MediasiteSched(WebDriver driver) {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
         //this.listings = listings;
         this.driver = driver;
@@ -43,34 +45,18 @@ public class MediasiteSched {
         //driver.findElement(By.tagName("input")).click();
     }
 
-    public void navigateToSchoolOfPharmacy() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("School of Pharmacy")));
-        driver.findElement(By.partialLinkText("School of Pharmacy")).click();
+    public void loginToMediasite(String userName, String password) {
+        setUsername(userName);
+        setPassword(password);
+        clickLogin();
     }
 
-    public void navigateToPharmD() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("PharmD")));
-        driver.findElement(By.partialLinkText("PharmD")).click();
-    }
-
-    public void navigateToSemester(String semester) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(semester)));
-        driver.findElement(By.partialLinkText(semester)).click();
-    }
-
-    public void navigateToClass(String className) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(className)));
-        driver.findElement(By.partialLinkText(className)).click();
-    }
-
-    public void navigateToTraining() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Training")));
-        driver.findElement(By.partialLinkText("Training")).click();
-    }
-
-    public void navigateToTesting() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Testing")));
-        driver.findElement(By.partialLinkText("Testing")).click();
+    public void navigateToFolder(Queue<String> folders) throws NoSuchElementException {
+        while (folders.peek() != null) {
+            String currentFolder = folders.remove();
+            wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(currentFolder)));
+            driver.findElement(By.partialLinkText(currentFolder)).click();
+        }
     }
 
     public void addNewPresentation() {
@@ -88,16 +74,16 @@ public class MediasiteSched {
         driver.findElement(By.partialLinkText(template)).click();
     }
 
-    //i.e., "PHAR539 Medicinal Chemistry 2 04/01/2015", still missing A, B, C, D
-    public void setTitle(String className, String dateInMDYFormat) {
+
+    public void setTitle(String title) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Title")));
-        driver.findElement(By.id("Title")).sendKeys(className + " " + dateInMDYFormat);
+        driver.findElement(By.id("Title")).sendKeys(title);
     }
 
-    public void setTitle(String className, String dateInMDYFormat, char version) {
+    /*public void setTitle(String className, String dateInMDYFormat, char version) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Title")));
         driver.findElement(By.id("Title")).sendKeys(className + " " + dateInMDYFormat + " " + version);
-    }
+    }*/
 
     //i.e., "NSAIDS 1"
     public void setDescription(String classDescription) {
@@ -129,6 +115,7 @@ public class MediasiteSched {
                 presenterSearch.sendKeys(presenterQueue.peek());
                 WebElement searchButton = driver.findElement(By.partialLinkText("Search"));
                 actions.moveToElement(searchButton).click().build().perform();
+                //need something better....
                 Thread.sleep(5000);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ResultsTable")));
                 List<WebElement> searchResults = driver.findElements(By.className("ResultsTable"));
@@ -138,8 +125,8 @@ public class MediasiteSched {
                 }
                 presenterQueue.poll();
             } catch (TimeoutException e) {
-                System.out.println("In catch.");
-                notExistingPresenters.add(presenterQueue.poll());
+                //System.out.println("In catch.");
+                notExistingPresenters.add(presenterQueue.remove());
             }
         }
         WebElement addSelected = driver.findElement(By.partialLinkText("Add Selected"));
@@ -238,6 +225,8 @@ public class MediasiteSched {
                 multiples.put(presentation.getClassPrefix(), new HashMap() {{
                     put(presentation.getLocalDate(), 'A');
                 }});
+                System.out.println(presentation.getClassPrefix());
+                System.out.println(multiples.get(presentation.getClassPrefix()));
                 presentation.setMultipleVer('A');
             }
 
@@ -251,11 +240,43 @@ public class MediasiteSched {
             else if (multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate())) {
                 char multipleVer = multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate());
                 multipleVer++;
+                final char finalMultipleVer = multipleVer;
+                multiples.get(presentation.getClassPrefix()).remove(presentation.getLocalDate());
+                multiples.put(presentation.getClassPrefix(), new HashMap() {{
+                    put(presentation.getLocalDate(), finalMultipleVer);
+                }});
+
+                System.out.println(presentation.getClassPrefix());
+                System.out.println(multiples.get(presentation.getClassPrefix()));
                 presentation.setMultipleVer(multipleVer);
             }
         }
 
+
+
         return multiples;
+    }
+
+    public boolean createMediasitePresentation(Queue<String> folders, String title, String description, Queue<String> faculty, String startHour,
+                                            String startMinute, String amOrPm, String dateInMDYFormat) throws NoSuchElementException {
+
+
+
+        navigateToFolder(folders);
+        addNewPresentation();
+        selectTemplate("SOP Standard Template (2014)");
+        setTitle(title);
+        setDescription(description);
+        try {
+            setPresenters(faculty);
+        } catch (InterruptedException e) {
+
+        }
+        setTime(startHour, startMinute, amOrPm);
+        setRecordDate(dateInMDYFormat);
+        savePresentation();
+
+        return true;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -291,10 +312,18 @@ public class MediasiteSched {
         testData.add(test3);
 
 
-        MediasiteSched.updateListingsForMultiples(testData);
+        Map<String, HashMap<LocalDate, Character>> testmap = MediasiteSched.updateListingsForMultiples(testData);
+        Set<String> classes = testmap.keySet();
 
-        for (Listing l : testData)
-            System.out.println(l.getClassName() + " " + l.getMultipleVer());
+        for (String s : classes) {
+            Set<LocalDate> classVers = testmap.get(s).keySet();
+            System.out.println(s);
+            System.out.println(testmap.get(s).get(classVers));
+        }
+
+
+        //for (Listing l : testData)
+         //   System.out.println(l.getClassName() + " " + l.getMultipleVer());
 
 
 

@@ -24,6 +24,7 @@ public class Listing extends Observable {
     private List<String> faculty;
     private boolean scheduled;
     private boolean error;
+    private String exceptionString;
     private File scrFile;
 
     public Listing() {
@@ -175,8 +176,9 @@ public class Listing extends Observable {
         notifyObservers("Scheduled successfully");
     }
 
-    public void setError() {
+    public void setError(Exception e) {
         error = true;
+        exceptionString = e.toString();
         setChanged();
         notifyObservers("Failed to schedule");
     }
@@ -186,8 +188,10 @@ public class Listing extends Observable {
         test.setStartTime(new DateTime());
         System.out.println(test.getDayOfWeek());
         System.out.println(test.getStartTimeInLocalTimeFormat());
+        System.out.println(new LocalDate().getYear());
 
         test.setClassName("PHMY513 Case-Based Management of Infectious Diseases");
         System.out.println(test.getClassPrefix());
+        System.out.println(test.getClassName());
     }
 }
