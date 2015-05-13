@@ -1,17 +1,19 @@
 import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by dmanzelmann on 4/20/2015.
@@ -59,36 +61,31 @@ public class TMSSched {
     }
 
     public void selectStartDateAndTime(DateTime start) {
+        //start time
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         WebElement startDate;
+
         try {
             startDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpStartDate_textBox\"]"));
-            startDate.clear();
-        }  catch (org.openqa.selenium.StaleElementReferenceException e) {
+            js.executeScript("arguments[0].value = '" + DateUtils.getDateInMDYFormat(start) + "';", startDate);
+        } catch (StaleElementReferenceException | NoSuchElementException e) {
             startDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpStartDate_textBox\"]"));
-            startDate.clear();
-            startDate.sendKeys(DateUtils.getDateInMDYFormat(start));
+            js.executeScript("arguments[0].value = '" + DateUtils.getDateInMDYFormat(start) + "';", startDate);
         }
 
-        //start time
+
         WebElement startTime = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_tbStartTime\"]"));
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value = '" + DateUtils.getTime(start) + "';", startTime);
     }
 
     public void selectEndDateAndTime(DateTime end) {
         //select end date and time
         //end date
-        WebElement endDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpEndDate_textBox\"]"));
-        try {
-            endDate.clear();
-        }  catch (org.openqa.selenium.StaleElementReferenceException e) {
-            endDate= driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpStartDate_textBox\"]"));
-            endDate.clear();
-            endDate.sendKeys(DateUtils.getDateInMDYFormat(end));
-        }
-        //end time
-        WebElement endTime = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_tbEndTime\"]"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement endDate = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_dpEndDate_textBox\"]"));
+        js.executeScript("arguments[0].value = '" + DateUtils.getDateInMDYFormat(end) + "';", endDate);
+
+        WebElement endTime = driver.findElement(By.xpath("//*[@id=\"ctl00_uxContent_ctl01_conferenceTime_tbEndTime\"]"));
         js.executeScript("arguments[0].value = '" + DateUtils.getTime(end) + "';", endTime);
     }
 
@@ -107,7 +104,7 @@ public class TMSSched {
         return false;
     }
 
-    public void scheduleVTC(String userName, String password, String baltimoreRoom, String sgRoom, DateTime start, DateTime end) {
+    public boolean scheduleVTC(String userName, String password, String baltimoreRoom, String sgRoom, DateTime start, DateTime end, boolean sentinal) {
         driver.get("http://" + userName + ":" + password + "@" + "tms.rx.umaryland.edu/tms/default.aspx?pageId=116");
 
         selectTemplate(baltimoreRoom, sgRoom);
@@ -115,9 +112,15 @@ public class TMSSched {
         selectStartDateAndTime(start);
         selectEndDateAndTime(end);
         submit();
-        if (checkIfCodecIsInUse())
-            scheduleVTC(userName, password, "vtc4", sgRoom, start, end);
 
+        if (!checkIfCodecIsInUse())
+            return true;
+        else if (checkIfCodecIsInUse() && sentinal)
+            scheduleVTC(userName, password, "vtc4", sgRoom, start, end, false);
+        else
+            return false;
+
+        return true;
     }
 
     private static String chooseCodec(String baltimoreRoom) {
@@ -136,32 +139,31 @@ public class TMSSched {
     }
 
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
         System.setProperty("webdriver.chrome.driver", "\\\\private\\Home\\Desktop\\chromedriver.exe");
-        TMSSched test = new TMSSched(new ChromeDriver());
-        //TMSSched test = new TMSSched(new FirefoxDriver());
-        test.login("dmanzelmann", "TK421.c3po");
+        WebDriver driver = new ChromeDriver();
 
-        Listing vtc = new Listing();
-        vtc.setRoom("PH N203 SGIII 2125");
-        vtc.setClassName("SMdPHA General Body Meetings");
-        vtc.setStartTime(new DateTime().plusDays(30));
-        vtc.setEndTime(new DateTime().plusDays(30).plusMinutes(70));
-        vtc.setFaculty("Me");
-        String[] roomParts = vtc.getRoom().split(" ");
-        String baltiomreRoom = roomParts[0] + " " + roomParts[1];
-        String sgRoom = "USG " + roomParts[3];
-        test.scheduleVTC("dmanzelmann", "TK421@c3po", baltiomreRoom, sgRoom, vtc.getStartTime(), vtc.getEndTime());
+        ReadSched readSched = new ReadSched(driver);
+        readSched.setWeek(2015, 4, 19);
+        System.out.print("username: ");
+        readSched.setUserName(input.next());
+        System.out.print("password: ");
+        readSched.setPassword(input.next());
+        readSched.clickLogin();
+        readSched.readListings();
+        List<Listing> listings = readSched.getListings();
 
-        Listing vtc2 = new Listing();
-        vtc2.setRoom("PH N203 SGIII 2125");
-        vtc2.setClassName("SMdPHA General Body Meetings");
-        vtc2.setStartTime(new DateTime().plusDays(30).plusMinutes(10));
-        vtc2.setEndTime(new DateTime().plusDays(30).plusMinutes(70));
-        vtc2.setFaculty("Me");
-        roomParts = vtc2.getRoom().split(" ");
-        baltiomreRoom = roomParts[0] + " " + roomParts[1];
-        sgRoom = "USG " + roomParts[3];
-        test.scheduleVTC("dmanzelmann", "TK421@c3po", baltiomreRoom, sgRoom, vtc.getStartTime(), vtc.getEndTime());
+        List<Listing> tmsSlots = listings.stream()
+                .filter(l -> l.getActivity().equals("Videoconference"))
+                .collect(Collectors.toList());
+
+        TMSSched tmsSched = new TMSSched(driver);
+        tmsSched.login("dmanzelmann", "TK421.c3po");
+        Listing tmsSlotOne = tmsSlots.get(0);
+        String[] rooms = tmsSlotOne.getRooms();
+        tmsSched.scheduleVTC("dmanzelmann", "TK421.c3po", rooms[0], rooms[1],
+                tmsSlotOne.getStartTime().plusDays(90),
+                tmsSlotOne.getEndTime().plusDays(90), true);
 
     }
 }

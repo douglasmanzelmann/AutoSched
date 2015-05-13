@@ -25,7 +25,7 @@ public class MediasiteSched {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
         //this.listings = listings;
         this.driver = driver;
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, 120);
     }
 
     /*public void setListings(List<Listing> listings) {
@@ -103,7 +103,7 @@ public class MediasiteSched {
         Actions actions = new Actions(driver);
         actions.moveToElement(presentationPresenter).sendKeys(Keys.ARROW_DOWN).click().build().perform();
         WebElement addPresenter = driver.findElement(By.id("AddExisting"));
-        addPresenter.click();
+        //addPresenter.click();
 
         // add existing presenters
         // if they do not exist, add them to notExistingPresenters
@@ -124,6 +124,8 @@ public class MediasiteSched {
                     selectPresenter.click();
                 }
                 presenterQueue.poll();
+
+                // THIS NEEDS TO BE UPDATED.
             } catch (TimeoutException e) {
                 //System.out.println("In catch.");
                 notExistingPresenters.add(presenterQueue.remove());
@@ -217,42 +219,65 @@ public class MediasiteSched {
         return DateUtils.getCurrentSemesterAbbreviation(year, month) + " " + classString;
     }
 
-    public static Map<String, HashMap<LocalDate, Character>> updateListingsForMultiples(List<Listing> mediasiteListings) {
-        Map<String, HashMap<LocalDate, Character>> multiples = new HashMap<>();
+    public static int findIndexOfMap(List<HashMap<LocalDate, Character>> mapList, LocalDate date) {
+        int i = 0;
+        for (Map map : mapList) {
+            if (map.containsKey(date))
+                return i;
+            i++;
+        }
+        return -1;
+    }
+
+    public static Map<String, List<HashMap<LocalDate, Character>>> updateListingsForMultiples(List<Listing> mediasiteListings) {
+        Map<String, List<HashMap<LocalDate, Character>>> multiples = new HashMap<>();
 
         for (Listing presentation : mediasiteListings) {
             if (!multiples.containsKey(presentation.getClassPrefix())) {
-                multiples.put(presentation.getClassPrefix(), new HashMap() {{
+                multiples.put(presentation.getClassPrefix(), new ArrayList<HashMap<LocalDate, Character>>());
+                HashMap<LocalDate, Character> temp = new HashMap() {{
                     put(presentation.getLocalDate(), 'A');
-                }});
-                System.out.println(presentation.getClassPrefix());
-                System.out.println(multiples.get(presentation.getClassPrefix()));
+                }};
+                multiples.get(presentation.getClassPrefix()).add(temp);
                 presentation.setMultipleVer('A');
             }
 
-            else if (!multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate())) {
-                multiples.put(presentation.getClassPrefix(), new HashMap() {{
+
+            else if (MediasiteSched.findIndexOfMap(multiples.get(presentation.getClassPrefix()), presentation.getLocalDate()) == -1) {
+                HashMap<LocalDate, Character> temp = new HashMap() {{
                     put(presentation.getLocalDate(), 'A');
-                }});
+                }};
+
+                multiples.get(presentation.getClassPrefix()).add(temp);
                 presentation.setMultipleVer('A');
             }
 
-            else if (multiples.get(presentation.getClassPrefix()).containsKey(presentation.getLocalDate())) {
-                char multipleVer = multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate());
+            else if (MediasiteSched.findIndexOfMap(multiples.get(presentation.getClassPrefix()), presentation.getLocalDate()) >= 0) {
+                int index = MediasiteSched.findIndexOfMap(multiples.get(presentation.getClassPrefix()), presentation.getLocalDate());
+                char multipleVer = multiples.get(presentation.getClassPrefix()).get(index).get(presentation.getLocalDate());
+                multiples.get(presentation.getClassPrefix()).remove(index);
+
+
                 multipleVer++;
-                final char finalMultipleVer = multipleVer;
-                multiples.get(presentation.getClassPrefix()).remove(presentation.getLocalDate());
-                multiples.put(presentation.getClassPrefix(), new HashMap() {{
-                    put(presentation.getLocalDate(), finalMultipleVer);
-                }});
+                final char finalVersion = multipleVer;
+                HashMap<LocalDate, Character> temp = new HashMap() {{
+                    put(presentation.getLocalDate(), finalVersion);
+                }};
+                multiples.get(presentation.getClassPrefix()).add(temp);
 
-                System.out.println(presentation.getClassPrefix());
-                System.out.println(multiples.get(presentation.getClassPrefix()));
-                presentation.setMultipleVer(multipleVer);
+                presentation.setMultipleVer(finalVersion);
             }
         }
 
+        Set<String> classes = multiples.keySet();
 
+        for (String key : classes) {
+            List<HashMap<LocalDate, Character>> classLists = multiples.get(key);
+
+            for (HashMap map : classLists) {
+                System.out.println("class: " + key + "key: " + map.keySet() + " value: " + map.entrySet());
+            }
+        }
 
         return multiples;
     }
@@ -311,24 +336,5 @@ public class MediasiteSched {
         test3.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
         testData.add(test3);
 
-
-        Map<String, HashMap<LocalDate, Character>> testmap = MediasiteSched.updateListingsForMultiples(testData);
-        Set<String> classes = testmap.keySet();
-
-        for (String s : classes) {
-            Set<LocalDate> classVers = testmap.get(s).keySet();
-            System.out.println(s);
-            System.out.println(testmap.get(s).get(classVers));
-        }
-
-
-        //for (Listing l : testData)
-         //   System.out.println(l.getClassName() + " " + l.getMultipleVer());
-
-
-
-        //MediasiteSched mediasiteSched = new MediasiteSched(testData);
-        //System.out.println(new LocalDate().getMonthOfYear());
-        //System.out.println(new LocalDate().getYear() + " " + DateUtils.getCurrentSemester(new LocalDate().getMonthOfYear()));
     }
 }

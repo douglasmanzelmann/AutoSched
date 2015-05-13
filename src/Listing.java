@@ -1,4 +1,3 @@
-import net.sf.cglib.core.Local;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -16,6 +15,7 @@ public class Listing extends Observable {
     private DateTime startTime;
     private DateTime endTime;
     private String room;
+    private String secondRoom;
     private String className;
     private String classPrefix;
     private String classDescription;
@@ -100,8 +100,17 @@ public class Listing extends Observable {
         this.room = room;
     }
 
+    public void setRooms(String room, String secondRoom) {
+        this.room = room;
+        this.secondRoom = secondRoom;
+    }
+
     public String getRoom() {
         return room;
+    }
+
+    public String[] getRooms() {
+        return new String[]{room, secondRoom};
     }
 
     public String getActivity() {
@@ -166,6 +175,12 @@ public class Listing extends Observable {
     public String toString() {
         DateTimeFormatter startTimeFmt = DateTimeFormat.forPattern("M d h:mma");
         DateTimeFormatter endTimeFmt = DateTimeFormat.forPattern("h:mma");
+        String room = "";
+        if (!this.room.isEmpty() && this.secondRoom != null)
+            room = this.room + " & " + this.secondRoom;
+        else if (!this.room.isEmpty())
+            room = this.room;
+
         return startTime.toString(startTimeFmt) + " - " + endTime.toString(endTimeFmt) + " | " + room + " | " + activity
                 + " | " + className + " | " + classDescription + " | " + String.join(", ", faculty);
     }

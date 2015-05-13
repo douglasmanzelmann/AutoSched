@@ -56,7 +56,7 @@ public class Profiles {
 
                 return Stream.of(mwfMediasite, tthMediasite, mwfTMS, tthTMS).flatMap(l -> l.stream()).collect(Collectors.toList());
             case "bhall":
-                // Douglas' schedule
+                // Brian's schedule
                 // Mon, Wed, Fri 8:30am-12:50am Mediasite; 1:00pm-End of Day VTC
                 // Tues, Thur 8:30am-12:50am VTC; 1:00pm-End of Day Mediasite
                 mwfMediasite = list.stream().filter(l -> l.getDayOfWeek().equals("Monday")

@@ -67,20 +67,22 @@ public class ReadSched {
             temp.setStartTime(DateUtils.getDateTimeObject(tempDate, startTime));
             temp.setEndTime(DateUtils.getDateTimeObject(tempDate, endTime));
 
-            temp.setRoom(column.next().getText().replace("\n", " ").trim());
+            String room = column.next().getText().replace("\n", " ").trim();
 
-
-            //temp.setActivity(column.next().getText().replace("\n", " ").trim());
-            //String[] classDetails;
             List<String> classDetails = Arrays.asList(column.next().getText().trim().split("\n"));
             if (classDetails.get(classDetails.size() - 1).contains("Recorded in Mediasite")) {
                 temp.setClassName(classDetails.get(0));
                 temp.setClassDescription(classDetails.get(2)); // multiple white lines
                 temp.setActivity("Mediasite");
+                temp.setRoom(room);
             } else if (classDetails.get(classDetails.size() - 1).contains("Videoconference")) {
                 temp.setClassName(classDetails.get(0));
                 temp.setClassDescription("Videoconference");
                 temp.setActivity("Videoconference");
+                String[] rooms = room.split(" ");
+                String baltimoreRoom = rooms[0] + " " + rooms[1];
+                String sgRoom = "USG " + rooms[3];
+                temp.setRooms(baltimoreRoom, sgRoom);
             }
             // else if pre-record
             // also need to change autosched
@@ -88,12 +90,14 @@ public class ReadSched {
                 temp.setClassName(classDetails.get(0).substring(0, classDetails.get(0).indexOf("Pre-record")));
                 temp.setClassDescription(classDetails.get(1));
                 temp.setActivity("Pre-record");
+                temp.setRoom(room);
             } else {
                 String totalActivity = "";
                 for (String s : classDetails)
                     totalActivity += s;
 
                 temp.setActivity(totalActivity);
+                temp.setRoom(room);
             }
 
             temp.setFaculty(column.next().getText().trim());
@@ -105,10 +109,6 @@ public class ReadSched {
 
     public List<Listing> getListings() {
         return listings;
-    }
-
-    public int getTotalListings() {
-        return totalListings;
     }
 
 

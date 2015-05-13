@@ -1,5 +1,6 @@
 import org.joda.time.LocalDate;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.*;
@@ -14,13 +15,15 @@ public class AutoSched {
     private ReadSched readSched;
     private MediasiteSched mediasiteSched;
     private TMSSched tmsSched;
-    private Map<String, HashMap<LocalDate, Character>> multiples;
+    private Map<String, List<HashMap<LocalDate, Character>>> multiples;
     private List<Listing> listings;
 
     public AutoSched() {
-        driver = new FirefoxDriver();
+        System.setProperty("webdriver.chrome.driver", "\\\\private\\Home\\Desktop\\chromedriver.exe");
+        driver = new ChromeDriver();
         readSched = new ReadSched(driver);
         mediasiteSched = new MediasiteSched(driver);
+        tmsSched = new TMSSched(driver);
     }
 
     private void loginToPortal(String userName, String password) {
@@ -40,7 +43,6 @@ public class AutoSched {
         readSched.clickLogin();
         readSched.readListings();
         listings = readSched.getListings();
-        multiples = MediasiteSched.updateListingsForMultiples(listings);
     }
 
     public List<Listing> getListings() {
@@ -48,12 +50,13 @@ public class AutoSched {
     }
 
     public void loginToMediasite(String userName, String password) {
-        driver.get("mediasite.umaryland.edu/mediasite/manage");
+        driver.get("http://mediasite.umaryland.edu/mediasite/manage");
 
         mediasiteSched.loginToMediasite(userName, password);
     }
 
     public void createMediasitePresentations(List<Listing> listings, Boolean testing) {
+        multiples = MediasiteSched.updateListingsForMultiples(listings);
         Queue<String> folders = new ArrayBlockingQueue<>(5);
         for (Listing presentation : listings) {
 
@@ -70,25 +73,15 @@ public class AutoSched {
             }
 
             String title = "";
-            if (multiples.isEmpty())
-                System.out.println("multiples is empty");
-
-            if (multiples.containsKey(presentation.getClassPrefix()))
-                System.out.println("yes");
-
-
-            System.out.println(presentation.getLocalDate());
-            System.out.println(presentation.getMultipleVer());
-            System.out.println(presentation.getClassPrefix());
-            System.out.println(multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate()));
-
-
 
             if (presentation.getMultipleVer() == 'A') {
-                if (multiples.get(presentation.getClassPrefix()).get(presentation.getLocalDate()) > 'A')
-                   title = presentation.getClassName() + " " + presentation.getDateInMDYFormat() + " " + presentation.getMultipleVer();
+                char multiVer;
+                int index = MediasiteSched.findIndexOfMap(multiples.get(presentation.getClassPrefix()), presentation.getLocalDate());
+                if (multiples.get(presentation.getClassPrefix()).get(index).get(presentation.getLocalDate()) > 'A')
+                    title = presentation.getClassName() + " " + presentation.getDateInMDYFormat() + " " + presentation.getMultipleVer();
                 else
                     title = presentation.getClassName() + " " + presentation.getDateInMDYFormat();
+
             }
             else if (presentation.getMultipleVer() > 'A') {
                 title = presentation.getClassName() + " " + presentation.getDateInMDYFormat() + " " + presentation.getMultipleVer();
@@ -102,6 +95,23 @@ public class AutoSched {
                 presentation.setError(e);
             }
 
+            presentation.setScheduled();
+        }
+    }
+
+    public void scheduleTMSSlots(List<Listing> listings, String username, String password) {
+        tmsSched.login(username, password);
+
+        for (Listing tmsSlot : listings) {
+            String[] rooms = tmsSlot.getRooms();
+
+            if (!tmsSched.scheduleVTC(username, password, rooms[0], rooms[1], tmsSlot.getStartTime().plusDays(90), tmsSlot.getEndTime().plusDays(90), true)) {
+                System.out.println("break");
+                break;
+            }
+
+            else
+                tmsSlot.setScheduled();
         }
     }
 
@@ -130,11 +140,7 @@ public class AutoSched {
         schedule.readSched.readListings();
         List<Listing> listings = schedule.readSched.getListings();
 
-        System.out.print("Enter Mediasite username: ");
-        userName = input.next();
-        System.out.print("Enter Mediasite password: ");
-        password = input.next();
-        schedule.loginToMediasite(userName, password);
+
         /*schedule.createMediasitePresentations(listings.stream()
                 .filter(l -> l.getActivity().equals("Mediasite"))
                 .collect(Collectors.toList()), true);*/
@@ -144,6 +150,12 @@ public class AutoSched {
 
         // this method mutates mediasiteListings
         schedule.multiples = MediasiteSched.updateListingsForMultiples(mediasiteListings);
+
+        System.out.print("Enter Mediasite username: ");
+        userName = input.next();
+        System.out.print("Enter Mediasite password: ");
+        password = input.next();
+        schedule.loginToMediasite(userName, password);
         schedule.createMediasitePresentations(mediasiteListings, true);
     }
 }

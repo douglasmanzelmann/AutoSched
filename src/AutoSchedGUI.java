@@ -3,11 +3,12 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by dmanzelmann on 5/6/2015.
  */
-public class AutoSchedGUI extends JFrame implements ActionListener {
+public class AutoSchedGUI extends JFrame {
     AutoSched sched;
     List<Listing> schedule;
 
@@ -94,7 +95,7 @@ public class AutoSchedGUI extends JFrame implements ActionListener {
                 String username = (String)userNameBox.getSelectedItem();
                 String password = new String(passwordField.getPassword());
                 sched.readSched(username, password, year, month, day);
-                schedule = Profiles.filter((String) username, sched.getListings());
+                schedule = Profiles.filter(username, sched.getListings());
 
 
                 for (Listing l : schedule) {
@@ -121,6 +122,7 @@ public class AutoSchedGUI extends JFrame implements ActionListener {
                 //listingScrollPane.repaint();
                 revalidate();
                 repaint();
+
                 sched.loginToMediasite(username, password);
                 sched.createMediasitePresentations(schedule, true);
             }
@@ -142,10 +144,25 @@ public class AutoSchedGUI extends JFrame implements ActionListener {
         JTextField tmsUserNameField = new JTextField(10);
         JLabel tmsPasswordLabel = new JLabel("Enter password");
         JPasswordField tmsPasswordField = new JPasswordField(10);
+        JButton tmsStartScheduling = new JButton("Schedule TMS");
         tmsSchedPanel.add(tmsUserNameLabel);
         tmsSchedPanel.add(tmsUserNameField);
         tmsSchedPanel.add(tmsPasswordLabel);
         tmsSchedPanel.add(tmsPasswordField);
+        tmsSchedPanel.add(tmsStartScheduling);
+        tmsStartScheduling.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Listing> tmsSlots = schedule.stream()
+                        .filter(l -> l.getActivity().equals("Videoconference"))
+                        .collect(Collectors.toList());
+
+                String username = tmsUserNameField.getText();
+                String password = new String(tmsPasswordField.getPassword());
+                sched.scheduleTMSSlots(tmsSlots, username, password);
+            }
+        });
+
 
         // Create a login panel and add the two login sections
         JPanel loginPanel = new JPanel(new BorderLayout());
@@ -169,12 +186,6 @@ public class AutoSchedGUI extends JFrame implements ActionListener {
         setVisible(true);
         validate();
     }
-
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-
 
     public static void main(String[] args) throws InterruptedException{
         AutoSchedGUI autoSchedGUI = new AutoSchedGUI();
