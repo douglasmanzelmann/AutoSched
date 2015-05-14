@@ -3,6 +3,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
@@ -89,8 +90,9 @@ public class AutoSched {
 
 
             try {
-                mediasiteSched.createMediasitePresentation(folders, title, presentation.getClassDescription(), presentation.getFacultyQueue(),
+                File screenshot = mediasiteSched.createMediasitePresentation(folders, title, presentation.getClassDescription(), presentation.getFacultyQueue(),
                         presentation.getStartHour(), presentation.getStartMinute(), presentation.getamOrPm(), presentation.getDateInMDYFormat());
+                presentation.setScreenshot(screenshot);
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 presentation.setError(e);
             }

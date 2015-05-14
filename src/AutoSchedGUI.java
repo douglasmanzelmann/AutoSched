@@ -1,7 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -118,13 +121,31 @@ public class AutoSchedGUI extends JFrame {
                     displaySchedulePanel.add(current);
                     displaySchedulePanel.add(currentStatus);
 
+                    currentStatus.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try {
+                                BufferedImage image = ImageIO.read(l.getScreenshot());
+
+                                PresentationScheduleStatusModal statusModal =
+                                        new PresentationScheduleStatusModal(l.getClassName(), image);
+                            } catch (IOException ex) { }
+
+
+                        }
+                    });
+
                 }
                 //listingScrollPane.repaint();
                 revalidate();
                 repaint();
 
+                // mediasite
+                List<Listing> mediasiteSchedule = schedule.stream()
+                        .filter(l -> l.getActivity().equals("Mediasite"))
+                        .collect(Collectors.toList());
                 sched.loginToMediasite(username, password);
-                sched.createMediasitePresentations(schedule, true);
+                sched.createMediasitePresentations(mediasiteSchedule, true);
             }
         });
 
@@ -170,12 +191,12 @@ public class AutoSchedGUI extends JFrame {
         loginPanel.add(tmsSchedPanel, BorderLayout.PAGE_END);
 
         // Display Progress Bars
-        JProgressBar readSchedProgressBar = new JProgressBar();
+        /*JProgressBar readSchedProgressBar = new JProgressBar();
         readSchedProgressBar.setStringPainted(true);
         JProgressBar mediasiteSchedProgressBar = new JProgressBar();
         mediasiteSchedProgressBar.setStringPainted(true);
         JProgressBar tmsSchedProgressBar = new JProgressBar();
-        tmsSchedProgressBar.setStringPainted(true);
+        tmsSchedProgressBar.setStringPainted(true);*/
 
 
         JPanel contentPanel = new JPanel(new BorderLayout());

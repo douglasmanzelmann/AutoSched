@@ -1,13 +1,18 @@
 import net.sf.cglib.core.Local;
+import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
+
+import java.io.File;
+import java.sql.Time;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -25,7 +30,7 @@ public class MediasiteSched {
         //this needs to be a copy. or rather, I need to pass a copy to protect data.
         //this.listings = listings;
         this.driver = driver;
-        wait = new WebDriverWait(driver, 120);
+        wait = new WebDriverWait(driver, 60);
     }
 
     /*public void setListings(List<Listing> listings) {
@@ -119,18 +124,19 @@ public class MediasiteSched {
                 Thread.sleep(5000);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ResultsTable")));
                 List<WebElement> searchResults = driver.findElements(By.className("ResultsTable"));
-                if (searchResults.size() == 1) {
+                if (searchResults.size() >= 1) {
                     WebElement selectPresenter = driver.findElement(By.id("Check"));
                     selectPresenter.click();
                 }
                 presenterQueue.poll();
 
+
                 // THIS NEEDS TO BE UPDATED.
             } catch (TimeoutException e) {
-                //System.out.println("In catch.");
                 notExistingPresenters.add(presenterQueue.remove());
             }
         }
+
         WebElement addSelected = driver.findElement(By.partialLinkText("Add Selected"));
         addSelected.click();
 
@@ -271,18 +277,10 @@ public class MediasiteSched {
 
         Set<String> classes = multiples.keySet();
 
-        for (String key : classes) {
-            List<HashMap<LocalDate, Character>> classLists = multiples.get(key);
-
-            for (HashMap map : classLists) {
-                System.out.println("class: " + key + "key: " + map.keySet() + " value: " + map.entrySet());
-            }
-        }
-
         return multiples;
     }
 
-    public boolean createMediasitePresentation(Queue<String> folders, String title, String description, Queue<String> faculty, String startHour,
+    public File createMediasitePresentation(Queue<String> folders, String title, String description, Queue<String> faculty, String startHour,
                                             String startMinute, String amOrPm, String dateInMDYFormat) throws NoSuchElementException {
 
 
@@ -301,10 +299,17 @@ public class MediasiteSched {
         setRecordDate(dateInMDYFormat);
         savePresentation();
 
-        return true;
+
+        //Take screenshot
+        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+        return scrFile;
     }
 
     public static void main(String[] args) throws InterruptedException {
+        System.setProperty("webdriver.chrome.driver", "\\\\private\\Home\\Desktop\\chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("http://mediasite.umaryland.edu/mediasite/manage");
         List<Listing> testData = new ArrayList<>();
         Listing test = new Listing();
         test.setRoom("N103");
@@ -313,28 +318,17 @@ public class MediasiteSched {
                 test.setActivity("Mediasite");
         test.setStartTime(new DateTime());
         test.setEndTime(new DateTime());
-        test.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
+        test.setFaculty("Manzelmann, DougBobFrank");
         testData.add(test);
 
-        Listing test2 = new Listing();
-        test2.setRoom("N103");
-        test2.setClassName("PHAR580 Pharmacy Law");
-        test2.setClassDescription("Blah blah blah");
-        test2.setActivity("Mediasite");
-        test2.setStartTime(new DateTime());
-        test2.setEndTime(new DateTime());
-        test2.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
-        testData.add(test2);
+        MediasiteSched mediasiteSched = new MediasiteSched(driver);
+        mediasiteSched.loginToMediasite("dmanzelmann", "TK421@c3po");
+        Queue<String> folders = new ArrayBlockingQueue<String>(5);
+        folders.add("School of Pharmacy"); folders.add("Training"); folders.add("Testing");
 
-        Listing test3 = new Listing();
-        test3.setRoom("N103");
-        test3.setClassName("PHAR559 Some Pharmacy Class");
-        test3.setClassDescription("Drugs are good, mmm kay");
-        test3.setActivity("Mediasite");
-        test3.setStartTime(new DateTime());
-        test3.setEndTime(new DateTime());
-        test3.setFaculty("Test2, Test2\nFletcher, Steven\nTest, Test\nPalumbo, Frank");
-        testData.add(test3);
+
+        mediasiteSched.createMediasitePresentation(folders, "Test", "Test", test.getFacultyQueue(), "11", "00",
+                "AM", "5/14/2015");
 
     }
 }

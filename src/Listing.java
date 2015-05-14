@@ -1,11 +1,20 @@
+import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
@@ -25,7 +34,8 @@ public class Listing extends Observable {
     private boolean scheduled;
     private boolean error;
     private String exceptionString;
-    private File scrFile;
+    private File screenshot;
+
 
     public Listing() {
         faculty = new ArrayList<>();
@@ -196,6 +206,22 @@ public class Listing extends Observable {
         exceptionString = e.toString();
         setChanged();
         notifyObservers("Failed to schedule");
+        notifyObservers();
+    }
+
+    public File getScreenshot() {
+        return screenshot;
+    }
+
+    public void setScreenshot(File screenshot) {
+        this.screenshot = screenshot;
+        /*try {
+            BufferedImage in = ImageIO.read(screenshot);
+            this.screenshot = new BufferedImage(in.getWidth(), in.getHeight(),
+                    BufferedImage.TYPE_INT_ARGB);
+        } catch (IOException e) {
+            //something here
+        }*/
     }
 
     public static void main(String[] args) {
@@ -206,7 +232,46 @@ public class Listing extends Observable {
         System.out.println(new LocalDate().getYear());
 
         test.setClassName("PHMY513 Case-Based Management of Infectious Diseases");
+
+        File img = new File("\\\\private\\Home\\Desktop\\test_buffered_image.JPG");
+        test.setScreenshot(img);
+
+        JLabel imageLabel = null;
+
+        try {
+            BufferedImage image = ImageIO.read(test.getScreenshot());
+            imageLabel = new JLabel(new ImageIcon(image));
+        } catch (IOException e) { }
+
+
+
         System.out.println(test.getClassPrefix());
         System.out.println(test.getClassName());
+
+        JFrame testFrame = new JFrame();
+        JButton open = new JButton("open");
+        testFrame.setLayout(new BorderLayout());
+
+
+        testFrame.add(imageLabel, BorderLayout.CENTER);
+        testFrame.add(open, BorderLayout.PAGE_END);
+
+        testFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        testFrame.validate();
+        testFrame.setVisible(true);
+
+        open.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    BufferedImage image = ImageIO.read(img);
+                    PresentationScheduleStatusModal statusModal = new PresentationScheduleStatusModal("test", image);
+                }
+                catch (IOException ex) { }
+
+                //PresentationScheduleStatusModal statusModal = new PresentationScheduleStatusModal("test", test.getScreenshot());
+            }
+        });
+
     }
 }
