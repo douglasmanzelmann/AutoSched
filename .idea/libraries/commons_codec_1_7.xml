@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="commons-codec-1.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/EWS-Java-API-master/EWS-Java-API-master/lib/commons-codec-1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/EWS-Java-API-master/EWS-Java-API-master/lib/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/EWS-Java-API-master/EWS-Java-API-master/lib/httpclient-4.2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/EWS-Java-API-master/EWS-Java-API-master/lib/httpcore-4.2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/EWS-Java-API-master/EWS-Java-API-master/lib/jcifs-1.3.17.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

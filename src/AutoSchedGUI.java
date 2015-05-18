@@ -15,7 +15,7 @@ public class AutoSchedGUI extends JFrame {
     AutoSched sched;
     List<Listing> schedule;
 
-    public AutoSchedGUI() throws InterruptedException {
+    public AutoSchedGUI() {
         System.setProperty("jsse.enableSNIExtension", "false");
         sched = new AutoSched();
 

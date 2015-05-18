@@ -299,7 +299,6 @@ public class MediasiteSched {
         setRecordDate(dateInMDYFormat);
         savePresentation();
 
-
         //Take screenshot
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 
