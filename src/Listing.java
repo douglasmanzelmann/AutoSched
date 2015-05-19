@@ -248,30 +248,6 @@ public class Listing extends Observable {
         System.out.println(test.getClassPrefix());
         System.out.println(test.getClassName());
 
-        JFrame testFrame = new JFrame();
-        JButton open = new JButton("open");
-        testFrame.setLayout(new BorderLayout());
-
-
-        testFrame.add(imageLabel, BorderLayout.CENTER);
-        testFrame.add(open, BorderLayout.PAGE_END);
-
-        testFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        testFrame.validate();
-        testFrame.setVisible(true);
-
-        open.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    BufferedImage image = ImageIO.read(img);
-                    PresentationScheduleStatusModal statusModal = new PresentationScheduleStatusModal("test", image);
-                }
-                catch (IOException ex) { }
-
-                //PresentationScheduleStatusModal statusModal = new PresentationScheduleStatusModal("test", test.getScreenshot());
-            }
-        });
 
     }
 }

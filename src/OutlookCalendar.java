@@ -1,5 +1,7 @@
+import org.joda.time.DateTime;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -37,6 +39,10 @@ public class OutlookCalendar {
         driver.findElement(By.id("lnkCal")).click();
     }
 
+    public void setViewToOneDay() {
+        driver.findElement(By.id("day")).click();
+    }
+
     public void scheduleNewAppointment() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("newapptc")));
         driver.findElement(By.xpath("//*[@id=\"newapptc\"]/span")).click();
@@ -62,42 +68,44 @@ public class OutlookCalendar {
         driver.findElement(By.id("txtLoc")).sendKeys(location);
     }
 
-    public void setStartDate(int date) {
-        WebElement startDate = driver.findElement(By.xpath("html/body/div[15]/div[2]/div[1]/div[1]/div[7]/div[2]/div/div/div/span"));
+    /*public void setStartDate(int date) {
+        //WebElement startDate = driver.findElement(By.xpath("html/body/div[15]/div[2]/div[1]/div[1]/div[7]/div[2]/div/div/div/span"));
         //JavascriptExecutor js = (JavascriptExecutor) driver;
         //js.executeScript("arguments[0].text = '" + date + "';", startDate);
         //new Actions(driver).moveToElement(startDate).sendKeys(Keys.ENTER);
 
-        WebElement today = driver.findElement(By.id("s"));
-        WebElement todaysParent = today.findElement(By.xpath(".."));
-        WebElement nextWeek = todaysParent.findElement(By.xpath("div/following-sibling::*"));
+        //WebElement today = driver.findElement(By.id("s"));
+        //WebElement todaysParent = today.findElement(By.xpath(".."));
+        //WebElement nextWeek = todaysParent.findElement(By.xpath("div/following-sibling::*"));
+        WebElement startDate = driver.findElement(By.xpath("//span[text()='" + date + "']"));
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        WebElement divDP = driver.findElement(By.id("divDP"));
+        js.executeScript("arguments[0].style.display='block';", divDP);
+        System.out.println(startDate.getText());
+        startDate.click();
 
+    }*/
+
+    public void setDate(int date) {
+        driver.findElement(By.xpath("//span[text()='" + date + "']")).click();
     }
 
     public void setStartTime(String time) {
         WebElement startTime = driver.findElement(By.xpath("html/body/div[15]/div[2]/div[1]/div[1]/div[7]/div[3]/div/div/div/div/span/input"));
-        //startTime.clear();
-        //startTime.sendKeys();
+        startTime.clear();
+        startTime.sendKeys(time);
         //new Actions(driver).moveToElement(startTime).sendKeys(time, Keys.ENTER);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].text = '" + time + "';", startTime);
-    }
-
-
-    public void setEndDate(int date) {
-        WebElement endDate = driver.findElement(By.xpath("html/body/div[15]/div[2]/div[1]/div[1]/div[8]/div[2]/div/div/div/span"));
         //JavascriptExecutor js = (JavascriptExecutor) driver;
-        //js.executeScript("arguments[0].text = '" + date + "';", endDate);
-        //new Actions(driver).moveToElement(endDate).sendKeys(Keys.ENTER);
+        //js.executeScript("arguments[0].text = '" + time + "';", startTime);
     }
 
     public void setEndTime(String time) {
         WebElement endTime = driver.findElement(By.xpath("html/body/div[15]/div[2]/div[1]/div[1]/div[8]/div[3]/div/div/div/div/span/input"));
-        //endTime.clear();
-        //endTime.sendKeys(time);
+        endTime.clear();
+        endTime.sendKeys(time);
         //new Actions(driver).moveToElement(endTime).sendKeys(time, Keys.ENTER);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].text = '" + time + "';", endTime);
+        //JavascriptExecutor js = (JavascriptExecutor) driver;
+        //js.executeScript("arguments[0].text = '" + time + "';", endTime);
     }
 
     public void pasteScreenShot(File screenshot) {
@@ -112,6 +120,36 @@ public class OutlookCalendar {
 
     public void saveAndClose() {
         driver.findElement(By.id("saveclose")).click();
+    }
+
+    public void scheduleInOutlook(int date, String startTime, String endtime, String className, String location, String activity, File screenshot) {
+        navigateToCalendar();
+        driver.switchTo().frame(0);
+        setViewToOneDay();
+
+        driver.switchTo().defaultContent();
+        setDate(date);
+
+        driver.switchTo().frame(0);
+        scheduleNewAppointment();
+
+        Set<String> handles = driver.getWindowHandles();
+        Iterator<String> iterator = handles.iterator();
+        String mainWindow = iterator.next();
+        String appointmentWindow = iterator.next();
+        driver.switchTo().window(appointmentWindow);
+
+        setSubject(className);
+        setLocation(location);
+
+        setStartTime(startTime);
+        setEndTime(endtime);
+
+        setCategory(activity);
+
+        pasteScreenShot(screenshot);
+
+        saveAndClose();
     }
 
     public static void main(String[] args) {
@@ -129,6 +167,13 @@ public class OutlookCalendar {
         test.login(username, password);
         test.navigateToCalendar();
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        driver.switchTo().frame(0);
+        test.setViewToOneDay();
+
+        driver.switchTo().defaultContent();
+        int date = 22;
+        test.setDate(date);
+
         driver.switchTo().frame(0);
         test.scheduleNewAppointment();
 
@@ -148,9 +193,9 @@ public class OutlookCalendar {
         test.setEndTime(endTime);
 
         //String date = "Tue 5/19/2015";
-        int date = 19;
-        test.setStartDate(date);
-        test.setEndDate(date);
+        //int date = 22;
+        //test.setStartDate(date);
+        //test.setEndDate(date);
 
         test.setCategory("Mediasite");
 
