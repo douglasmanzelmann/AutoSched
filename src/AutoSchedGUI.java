@@ -87,65 +87,81 @@ public class AutoSchedGUI extends JFrame {
         // Start ReadSched with input
         JButton startReadSched = new JButton("Read Schedule");
         startReadSched.addActionListener(new ActionListener() {
+            String username;
+            String password;
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                int month = Integer.parseInt(readSchedMonth.getText());
-                int day = Integer.parseInt(readSchedDay.getText());
-                int year = Integer.parseInt(readSchedYear.getText());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int month = Integer.parseInt(readSchedMonth.getText());
+                        int day = Integer.parseInt(readSchedDay.getText());
+                        int year = Integer.parseInt(readSchedYear.getText());
 
-                // do not do this. defeats the purpose of getPassword.
-                // will need to refactor code for a char[] later.
-                String username = (String)userNameBox.getSelectedItem();
-                String password = new String(passwordField.getPassword());
-                sched.readSched(username, password, year, month, day);
-                schedule = Profiles.filter(username, sched.getListings());
+                        // do not do this. defeats the purpose of getPassword.
+                        // will need to refactor code for a char[] later.
+                        username = (String)userNameBox.getSelectedItem();
+                        password = new String(passwordField.getPassword());
+                        sched.readSched(username, password, year, month, day);
+                        schedule = Profiles.filter(username, sched.getListings());
 
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (Listing l : schedule) {
+                                    JButton current = new JButton();
+                                    StatusButton currentStatus = new StatusButton("Not Started");
+                                    current.setHorizontalAlignment(SwingConstants.LEFT);
 
-                for (Listing l : schedule) {
-                    JButton current = new JButton();
-                    StatusButton currentStatus = new StatusButton("Not Started");
-                    current.setHorizontalAlignment(SwingConstants.LEFT);
-
-                    if (l.getActivity().equals("Mediasite"))
-                        current.setBackground(Color.GREEN);
-                    else if (l.getActivity().equals("Videoconference"))
-                        current.setBackground(Color.CYAN);
-                    else if (l.getActivity().equals("Pre-record"))
-                        current.setBackground(Color.ORANGE);
-                    else
-                        current.setBackground(Color.gray);
-
-
-                    current.setText(l.toString());
-                    l.addObserver(currentStatus);
-                    displaySchedulePanel.add(current);
-                    displaySchedulePanel.add(currentStatus);
-
-                    currentStatus.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            try {
-                                BufferedImage image = ImageIO.read(l.getScreenshot());
-
-                                PresentationScheduleStatusModal statusModal =
-                                        new PresentationScheduleStatusModal(l.getClassName(), image);
-                            } catch (IOException ex) { }
+                                    if (l.getActivity().equals("Mediasite"))
+                                        current.setBackground(Color.GREEN);
+                                    else if (l.getActivity().equals("Videoconference"))
+                                        current.setBackground(Color.CYAN);
+                                    else if (l.getActivity().equals("Pre-record"))
+                                        current.setBackground(Color.ORANGE);
+                                    else
+                                        current.setBackground(Color.gray);
 
 
-                        }
-                    });
+                                    current.setText(l.toString());
+                                    l.addObserver(currentStatus);
+                                    displaySchedulePanel.add(current);
+                                    displaySchedulePanel.add(currentStatus);
 
-                }
+                                    revalidate();
+                                    repaint();
+
+                                    currentStatus.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            try {
+                                                BufferedImage image = ImageIO.read(l.getScreenshot());
+
+                                                PresentationScheduleStatusModal statusModal =
+                                                        new PresentationScheduleStatusModal(l.getClassName(), image);
+                                            } catch (IOException ex) { }
+
+                                        }
+                                    });
+
+                                }
+                            }
+                        });
+                    }
+                }).start();
+
+
                 //listingScrollPane.repaint();
                 revalidate();
                 repaint();
 
                 // mediasite
-                List<Listing> mediasiteSchedule = schedule.stream()
+                /*List<Listing> mediasiteSchedule = schedule.stream()
                         .filter(l -> l.getActivity().equals("Mediasite"))
                         .collect(Collectors.toList());
                 sched.loginToMediasite(username, password);
-                sched.createMediasitePresentations(mediasiteSchedule, true);
+                sched.createMediasitePresentations(mediasiteSchedule, true);*/
             }
         });
 
@@ -209,6 +225,11 @@ public class AutoSchedGUI extends JFrame {
     }
 
     public static void main(String[] args) throws InterruptedException{
-        AutoSchedGUI autoSchedGUI = new AutoSchedGUI();
+        //AutoSchedGUI autoSchedGUI = new AutoSchedGUI();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new AutoSchedGUI();
+            }
+        });
     }
 }
